@@ -81,8 +81,26 @@ head(Vivienda)
 tail(Vivienda)
 str(Vivienda)
 summary(Vivienda)
+
+Vivienda$p1_3 <- as.numeric(Vivienda$p1_3)
+Vivienda$p1_1 <- as.numeric(Vivienda$p1_1)
+str(Vivienda)
+
 Vivienda[!complete.cases(Vivienda),]
 ```
+
+#### Por lo que vi creo que los que no contestaron la pregunta 3 su respuesta es 1 entonces:
+
+```{r}
+Vivienda_backup <- Vivienda
+Vivienda[!complete.cases(Vivienda),]
+Vivienda[is.na(Vivienda$p1_3),]
+Vivienda[is.na(Vivienda$p1_3),]
+Vivienda[is.na(Vivienda$p1_3), "p1_3"] <- 1
+Vivienda[!complete.cases(Vivienda),]
+head(Vivienda)
+```
+
 
 ### Explorar base de datos PerfilSociodemografico
 
@@ -91,6 +109,14 @@ head(PerfilSociodemografico)
 tail(PerfilSociodemografico)
 str(PerfilSociodemografico)
 summary(PerfilSociodemografico)
+
+PerfilSociodemografico$edad <- as.numeric(PerfilSociodemografico$edad)
+PerfilSociodemografico$p5_4 <- as.numeric(PerfilSociodemografico$p5_4)
+PerfilSociodemografico$p6_4 <- as.numeric(PerfilSociodemografico$p6_4)
+str(PerfilSociodemografico)
+
+str(PerfilSociodemografico)
+
 PerfilSociodemografico[!complete.cases(PerfilSociodemografico),]
 ```
 
@@ -101,6 +127,20 @@ head(Viajes)
 tail(Viajes)
 str(Viajes)
 summary(Viajes)
+
+Viajes$p5_15_15 <- as.numeric(Viajes$p5_15_15)
+Viajes$p5_15_16 <- as.numeric(Viajes$p5_15_16)
+Viajes$p5_15_17 <- as.numeric(Viajes$p5_15_17)
+Viajes$p5_15_19 <- as.numeric(Viajes$p5_15_19)
+Viajes$p5_15_20 <- as.numeric(Viajes$p5_15_20)
+Viajes$p5_19 <- as.numeric(Viajes$p5_19)
+Viajes$p5_21_1 <- as.numeric(Viajes$p5_21_1)
+Viajes$p5_21_2 <- as.numeric(Viajes$p5_21_2)
+Viajes$p5_23 <- as.numeric(Viajes$p5_23)
+Viajes$p5_26 <- as.numeric(Viajes$p5_26)
+
+str(Viajes)
+
 Viajes[!complete.cases(Viajes),]
 ```
 
@@ -111,7 +151,12 @@ head(Transporte)
 tail(Transporte)
 str(Transporte)
 summary(Transporte)
+
+Transporte$p5_16_1_1 <- as.numeric(Transporte$p5_16_1_1)
+Transporte$p5_16_1_2 <- as.numeric(Transporte$p5_16_1_2)
+Transporte$p5_16_2 <- as.numeric(Transporte$p5_16_2)
+str(Transporte)
+
 Transporte[!complete.cases(Transporte),]
 
 ```
-
