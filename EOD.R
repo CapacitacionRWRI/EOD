@@ -3885,3 +3885,173 @@ Transporte[!complete.cases(Transporte),]
 
 ```
 
+
+#### En p5_16_2 que es la pregunta der cuanto gasto en el transporte que utilizo respondido en p5_14. Voy a sustituir los NAs con la mediana del gasto que incurren dependiendo del modo de transporte que usaron. Es decir saco la mediana del gasto que incurren los que contestaron que usaron el medio de transporte 14 en la pregunta p5_14 y sustituyo esa mediana dentro de los que tengan NA y usaron el medio de transporte 14 igual.
+
+```{r}
+str(Transporte)
+```
+##### Aqui vemos que p5_14 es un integer y lo necesitamos como factor para poder saber los distintos tipos de transporte.
+
+```{r}
+Transporte$p5_14 <- as.factor(Transporte$p5_14)
+
+levels(Transporte$p5_14)
+```
+
+##### Hay 20 tipos de transporte
+
+```{r}
+med_Transporte_gasto_1 <- median(Transporte[Transporte$p5_14 == "1", "p5_16_2"], na.rm = T)
+med_Transporte_gasto_1
+```
+##### La mediana es 0 entonces aqui mejor voy a usar la media. Aunque la media sea mas sensible con los outliers es mejor que poner que gastan 0 en el transporte que usan. Siento que puede ser un error que no gaste nada en su transporte.
+
+
+```{r}
+prom_Transporte_gasto_1 <- mean(Transporte[Transporte$p5_14 == "1", "p5_16_2"], na.rm = T)
+prom_Transporte_gasto_1
+
+Transporte[(is.na(Transporte$p5_16_2) & Transporte$p5_14 == "1"), "p5_16_2"] <- prom_Transporte_gasto_1
+```
+
+##### En los demas si voy a intentar que sea la mediana
+```{r}
+med_Transporte_gasto_2 <- median(Transporte[Transporte$p5_14 == "2", "p5_16_2"], na.rm = T)
+med_Transporte_gasto_2
+Transporte[(is.na(Transporte$p5_16_2) & Transporte$p5_14 == "2"), "p5_16_2"] <- med_Transporte_gasto_2
+
+med_Transporte_gasto_3 <- median(Transporte[Transporte$p5_14 == "3", "p5_16_2"], na.rm = T)
+med_Transporte_gasto_3
+Transporte[(is.na(Transporte$p5_16_2) & Transporte$p5_14 == "3"), "p5_16_2"] <- med_Transporte_gasto_3
+
+med_Transporte_gasto_4 <- median(Transporte[Transporte$p5_14 == "4", "p5_16_2"], na.rm = T)
+med_Transporte_gasto_4
+Transporte[(is.na(Transporte$p5_16_2) & Transporte$p5_14 == "4"), "p5_16_2"] <- med_Transporte_gasto_4
+```
+
+
+```{r}
+med_Transporte_gasto_5 <- median(Transporte[Transporte$p5_14 == "5", "p5_16_2"], na.rm = T)
+med_Transporte_gasto_5
+
+```
+
+##### Como es NA al final pongo la mediana de todos en el numero de transporte 5 porque significa que no hay ni un valor ahi.
+
+```{r}
+
+med_Transporte_gasto_6 <- median(Transporte[Transporte$p5_14 == "6", "p5_16_2"], na.rm = T)
+med_Transporte_gasto_6
+Transporte[(is.na(Transporte$p5_16_2) & Transporte$p5_14 == "6"), "p5_16_2"] <- med_Transporte_gasto_6
+
+```
+
+```{r}
+med_Transporte_gasto_7 <- median(Transporte[Transporte$p5_14 == "7", "p5_16_2"], na.rm = T)
+med_Transporte_gasto_7
+```
+
+##### Otra vez lo del cero
+
+```{r}
+prom_Transporte_gasto_7 <- mean(Transporte[Transporte$p5_14 == "7", "p5_16_2"], na.rm = T)
+prom_Transporte_gasto_7
+
+Transporte[(is.na(Transporte$p5_16_2) & Transporte$p5_14 == "7"), "p5_16_2"] <- prom_Transporte_gasto_7
+```
+
+```{r}
+
+med_Transporte_gasto_8 <- median(Transporte[Transporte$p5_14 == "8", "p5_16_2"], na.rm = T)
+med_Transporte_gasto_8
+Transporte[(is.na(Transporte$p5_16_2) & Transporte$p5_14 == "8"), "p5_16_2"] <- med_Transporte_gasto_8
+
+med_Transporte_gasto_9 <- median(Transporte[Transporte$p5_14 == "9", "p5_16_2"], na.rm = T)
+med_Transporte_gasto_9
+
+prom_Transporte_gasto_9 <- mean(Transporte[Transporte$p5_14 == "9", "p5_16_2"], na.rm = T)
+prom_Transporte_gasto_9
+Transporte[(is.na(Transporte$p5_16_2) & Transporte$p5_14 == "9"), "p5_16_2"] <- prom_Transporte_gasto_9
+```
+##### En el 9 quedo 0 de las dos formas seguro es transporte a pie o algo asi supongo.
+
+```{r}
+med_Transporte_gasto_10 <- median(Transporte[Transporte$p5_14 == "10", "p5_16_2"], na.rm = T)
+med_Transporte_gasto_10
+
+med_Transporte_gasto_11 <- median(Transporte[Transporte$p5_14 == "11", "p5_16_2"], na.rm = T)
+med_Transporte_gasto_11
+
+med_Transporte_gasto_12 <- median(Transporte[Transporte$p5_14 == "12", "p5_16_2"], na.rm = T)
+med_Transporte_gasto_12
+
+med_Transporte_gasto_13 <- median(Transporte[Transporte$p5_14 == "13", "p5_16_2"], na.rm = T)
+med_Transporte_gasto_13
+
+med_Transporte_gasto_15 <- median(Transporte[Transporte$p5_14 == "15", "p5_16_2"], na.rm = T)
+med_Transporte_gasto_15
+```
+##### Otros NA
+
+```{r}
+med_Transporte_gasto_14 <- median(Transporte[Transporte$p5_14 == "14", "p5_16_2"], na.rm = T)
+med_Transporte_gasto_14
+
+prom_Transporte_gasto_14 <- mean(Transporte[Transporte$p5_14 == "14", "p5_16_2"], na.rm = T)
+prom_Transporte_gasto_14
+
+Transporte[(is.na(Transporte$p5_16_2) & Transporte$p5_14 == "14"), "p5_16_2"] <- med_Transporte_gasto_14
+
+```
+
+```{r}
+med_Transporte_gasto_16 <- median(Transporte[Transporte$p5_14 == "16", "p5_16_2"], na.rm = T)
+med_Transporte_gasto_16
+Transporte[(is.na(Transporte$p5_16_2) & Transporte$p5_14 == "16"), "p5_16_2"] <- med_Transporte_gasto_16
+
+med_Transporte_gasto_17 <- median(Transporte[Transporte$p5_14 == "17", "p5_16_2"], na.rm = T)
+med_Transporte_gasto_17
+Transporte[(is.na(Transporte$p5_16_2) & Transporte$p5_14 == "17"), "p5_16_2"] <- med_Transporte_gasto_17
+
+med_Transporte_gasto_18 <- median(Transporte[Transporte$p5_14 == "18", "p5_16_2"], na.rm = T)
+med_Transporte_gasto_18
+Transporte[(is.na(Transporte$p5_16_2) & Transporte$p5_14 == "18"), "p5_16_2"] <- med_Transporte_gasto_18
+
+med_Transporte_gasto_19 <- median(Transporte[Transporte$p5_14 == "19", "p5_16_2"], na.rm = T)
+med_Transporte_gasto_19
+
+prom_Transporte_gasto_19 <- mean(Transporte[Transporte$p5_14 == "19", "p5_16_2"], na.rm = T)
+prom_Transporte_gasto_19
+
+Transporte[(is.na(Transporte$p5_16_2) & Transporte$p5_14 == "19"), "p5_16_2"] <- prom_Transporte_gasto_19
+
+med_Transporte_gasto_20 <- median(Transporte[Transporte$p5_14 == "20", "p5_16_2"], na.rm = T)
+med_Transporte_gasto_20
+
+prom_Transporte_gasto_20 <- mean(Transporte[Transporte$p5_14 == "20", "p5_16_2"], na.rm = T)
+prom_Transporte_gasto_20
+
+Transporte[(is.na(Transporte$p5_16_2) & Transporte$p5_14 == "20"), "p5_16_2"] <- prom_Transporte_gasto_20
+```
+
+##### Ahora los que tenian puros NA con la mediana o media general
+
+```{r}
+med_Transporte_gasto <- median(Transporte[,"p5_16_2"], na.rm = T)
+med_Transporte_gasto
+
+prom_Transporte_gasto <- mean(Transporte[,"p5_16_2"], na.rm = T)
+prom_Transporte_gasto
+
+Transporte[is.na(Transporte$p5_16_2),]
+
+Transporte[is.na(Transporte$p5_16_2),"p5_16_2"] <- prom_Transporte_gasto
+
+summary(Transporte)
+
+Transporte[!complete.cases(Transporte),]
+
+```
+
+##### Las NAs que quedan de transporte son el codigo de estacion y esas yo creo que las podemos dejar vacias sin afectar el analisis.
