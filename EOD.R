@@ -3867,6 +3867,76 @@ str(Viajes)
 
 Viajes[!complete.cases(Viajes),]
 ```
+#### Todos los p5_15_algo voy a sustituir con medias dependiendo de la edad <18, 18-35, 35-65, >65. 
+
+```{r}
+med_auto_1 <- median(Viajes[Viajes$edad < 18, "p5_15_01"], na.rm = T)
+med_auto_1
+```
+##### Aunque en este caso como los menores de edad no manejan voy a suponer que los que no contestaron es por esa razon => 0.
+
+```{r}
+Viajes[(is.na(Viajes$p5_15_01) & Viajes$edad < 18), "p5_15_01"] <- 0
+
+```
+
+```{r}
+med_auto_2 <- median(Viajes[Viajes$edad >= 18 & Viajes$edad <= 35, "p5_15_01"], na.rm = T)
+med_auto_2
+
+
+Viajes[(is.na(Viajes$p5_15_01) & Viajes$edad >= 18 & Viajes$edad <= 35), "p5_15_01"] <- med_auto_2
+```
+
+```{r}
+med_auto_3 <- median(Viajes[Viajes$edad >= 35 & Viajes$edad <= 65, "p5_15_01"], na.rm = T)
+med_auto_3
+       
+Viajes[(is.na(Viajes$p5_15_01) & Viajes$edad > 35 & Viajes$edad <= 65), "p5_15_01"] <- med_auto_3
+```
+
+```{r}
+med_auto_4 <- median(Viajes[Viajes$edad > 65, "p5_15_01"], na.rm = T)
+med_auto_4
+       
+Viajes[(is.na(Viajes$p5_15_01) & Viajes$edad > 65), "p5_15_01"] <- med_auto_4
+
+```
+
+
+
+```{r}
+med_Micro_1 <- median(Viajes[Viajes$edad < 18, "p5_15_02"], na.rm = T)
+med_Micro_1
+Viajes[(is.na(Viajes$p5_15_02) & Viajes$edad < 18), "p5_15_02"] <- med_Micro_1
+```
+
+```{r}
+med_Micro_2 <- median(Viajes[Viajes$edad >= 18 & Viajes$edad <= 35, "p5_15_02"], na.rm = T)
+med_Micro_2
+
+
+Viajes[(is.na(Viajes$p5_15_02) & Viajes$edad >= 18 & Viajes$edad <= 35), "p5_15_02"] <- med_Micro_2
+```
+
+```{r}
+med_Micro_3 <- median(Viajes[Viajes$edad >= 35 & Viajes$edad <= 65, "p5_15_02"], na.rm = T)
+med_Micro_3
+       
+Viajes[(is.na(Viajes$p5_15_02) & Viajes$edad > 35 & Viajes$edad <= 65), "p5_15_02"] <- med_Micro_3
+```
+
+```{r}
+med_Micro_4 <- median(Viajes[Viajes$edad > 65, "p5_15_02"], na.rm = T)
+med_Micro_4
+       
+Viajes[(is.na(Viajes$p5_15_02) & Viajes$edad > 65), "p5_15_02"] <- med_Micro_4
+
+```
+
+
+
+
 
 ### Explorar base de datos Transporte
 
