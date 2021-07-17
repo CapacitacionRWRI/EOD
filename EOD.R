@@ -3867,6 +3867,7 @@ str(Viajes)
 
 Viajes[!complete.cases(Viajes),]
 ```
+
 #### Todos los p5_15_algo voy a sustituir con medias dependiendo de la edad <18, 18-35, 35-65, >65. 
 
 ```{r}
@@ -3933,6 +3934,731 @@ med_Micro_4
 Viajes[(is.na(Viajes$p5_15_02) & Viajes$edad > 65), "p5_15_02"] <- med_Micro_4
 
 ```
+
+#### Todos los p5_15_algo voy a sustituir con medias dependiendo de la edad <18, 18-35, 35-65, >65. 
+
+```{r}
+med_TaxiApp_1 <- median(Viajes[Viajes$edad < 18, "p5_15_03"], na.rm = T)
+med_TaxiApp_1
+
+Viajes[(is.na(Viajes$p5_15_03) & Viajes$edad < 18), "p5_15_03"] <- med_TaxiApp_1
+
+```
+
+
+```{r}
+med_TaxiApp_2 <- median(Viajes[Viajes$edad >= 18 & Viajes$edad <= 35, "p5_15_03"], na.rm = T)
+med_TaxiApp_2
+
+
+Viajes[(is.na(Viajes$p5_15_03) & Viajes$edad >= 18 & Viajes$edad <= 35), "p5_15_03"] <- med_TaxiApp_2
+```
+
+```{r}
+med_TaxiApp_3 <- median(Viajes[Viajes$edad >= 35 & Viajes$edad <= 65, "p5_15_03"], na.rm = T)
+med_TaxiApp_3
+       
+Viajes[(is.na(Viajes$p5_15_03) & Viajes$edad > 35 & Viajes$edad <= 65), "p5_15_03"] <- med_TaxiApp_3
+```
+
+```{r}
+med_TaxiApp_4 <- median(Viajes[Viajes$edad > 65, "p5_15_03"], na.rm = T)
+med_TaxiApp_4
+       
+Viajes[(is.na(Viajes$p5_15_03) & Viajes$edad > 65), "p5_15_03"] <- med_TaxiApp_4
+
+```
+
+
+
+```{r}
+med_TaxiSitio_1 <- median(Viajes[Viajes$edad < 18, "p5_15_04"], na.rm = T)
+med_TaxiSitio_1
+Viajes[(is.na(Viajes$p5_15_04) & Viajes$edad < 18), "p5_15_04"] <- med_TaxiSitio_1
+```
+
+```{r}
+med_TaxiSitio_2 <- median(Viajes[Viajes$edad >= 18 & Viajes$edad <= 35, "p5_15_04"], na.rm = T)
+med_TaxiSitio_2
+
+
+Viajes[(is.na(Viajes$p5_15_04) & Viajes$edad >= 18 & Viajes$edad <= 35), "p5_15_04"] <- med_TaxiSitio_2
+```
+
+```{r}
+med_TaxiSitio_3 <- median(Viajes[Viajes$edad >= 35 & Viajes$edad <= 65, "p5_15_04"], na.rm = T)
+med_TaxiSitio_3
+       
+Viajes[(is.na(Viajes$p5_15_04) & Viajes$edad > 35 & Viajes$edad <= 65), "p5_15_04"] <- med_TaxiSitio_3
+```
+
+```{r}
+med_TaxiSitio_4 <- median(Viajes[Viajes$edad > 65, "p5_15_04"], na.rm = T)
+med_TaxiSitio_4
+       
+Viajes[(is.na(Viajes$p5_15_04) & Viajes$edad > 65), "p5_15_04"] <- med_TaxiSitio_4
+
+```
+
+
+
+
+```{r}
+med_Metro_1 <- median(Viajes[Viajes$edad < 18, "p5_15_05"], na.rm = T)
+med_Metro_1
+Viajes[(is.na(Viajes$p5_15_05) & Viajes$edad < 18), "p5_15_05"] <- med_Metro_1
+```
+
+```{r}
+med_Metro_2 <- median(Viajes[Viajes$edad >= 18 & Viajes$edad <= 35, "p5_15_05"], na.rm = T)
+med_Metro_2
+
+
+Viajes[(is.na(Viajes$p5_15_05) & Viajes$edad >= 18 & Viajes$edad <= 35), "p5_15_05"] <- med_Metro_2
+```
+
+```{r}
+med_Metro_3 <- median(Viajes[Viajes$edad >= 35 & Viajes$edad <= 65, "p5_15_05"], na.rm = T)
+med_Metro_3
+       
+Viajes[(is.na(Viajes$p5_15_05) & Viajes$edad > 35 & Viajes$edad <= 65), "p5_15_05"] <- med_Metro_3
+```
+
+```{r}
+med_Metro_4 <- median(Viajes[Viajes$edad > 65, "p5_15_05"], na.rm = T)
+med_Metro_4
+       
+Viajes[(is.na(Viajes$p5_15_05) & Viajes$edad > 65), "p5_15_05"] <- med_Metro_4
+
+```
+
+
+
+
+```{r}
+med_RTP_1 <- median(Viajes[Viajes$edad < 18, "p5_15_06"], na.rm = T)
+med_RTP_1
+Viajes[(is.na(Viajes$p5_15_06) & Viajes$edad < 18), "p5_15_06"] <- med_RTP_1
+```
+
+```{r}
+med_RTP_2 <- median(Viajes[Viajes$edad >= 18 & Viajes$edad <= 35, "p5_15_06"], na.rm = T)
+med_RTP_2
+
+
+Viajes[(is.na(Viajes$p5_15_06) & Viajes$edad >= 18 & Viajes$edad <= 35), "p5_15_06"] <- med_RTP_2
+```
+
+```{r}
+med_RTP_3 <- median(Viajes[Viajes$edad >= 35 & Viajes$edad <= 65, "p5_15_06"], na.rm = T)
+med_RTP_3
+       
+Viajes[(is.na(Viajes$p5_15_06) & Viajes$edad > 35 & Viajes$edad <= 65), "p5_15_06"] <- med_RTP_3
+```
+
+```{r}
+med_RTP_4 <- median(Viajes[Viajes$edad > 65, "p5_15_06"], na.rm = T)
+med_RTP_4
+       
+Viajes[(is.na(Viajes$p5_15_06) & Viajes$edad > 65), "p5_15_06"] <- med_RTP_4
+
+```
+
+
+
+
+```{r}
+med_bici_1 <- median(Viajes[Viajes$edad < 18, "p5_15_07"], na.rm = T)
+med_bici_1
+Viajes[(is.na(Viajes$p5_15_07) & Viajes$edad < 18), "p5_15_07"] <- med_bici_1
+```
+
+```{r}
+med_bici_2 <- median(Viajes[Viajes$edad >= 18 & Viajes$edad <= 35, "p5_15_07"], na.rm = T)
+med_bici_2
+
+
+Viajes[(is.na(Viajes$p5_15_07) & Viajes$edad >= 18 & Viajes$edad <= 35), "p5_15_07"] <- med_bici_2
+```
+
+```{r}
+med_bici_3 <- median(Viajes[Viajes$edad >= 35 & Viajes$edad <= 65, "p5_15_07"], na.rm = T)
+med_bici_3
+       
+Viajes[(is.na(Viajes$p5_15_07) & Viajes$edad > 35 & Viajes$edad <= 65), "p5_15_07"] <- med_bici_3
+```
+
+```{r}
+med_bici_4 <- median(Viajes[Viajes$edad > 65, "p5_15_07"], na.rm = T)
+med_bici_4
+       
+Viajes[(is.na(Viajes$p5_15_07) & Viajes$edad > 65), "p5_15_07"] <- med_bici_4
+
+```
+
+
+
+
+
+```{r}
+med_bus_1 <- median(Viajes[Viajes$edad < 18, "p5_15_08"], na.rm = T)
+med_bus_1
+Viajes[(is.na(Viajes$p5_15_08) & Viajes$edad < 18), "p5_15_08"] <- med_bus_1
+```
+
+```{r}
+med_bus_2 <- median(Viajes[Viajes$edad >= 18 & Viajes$edad <= 35, "p5_15_08"], na.rm = T)
+med_bus_2
+
+
+Viajes[(is.na(Viajes$p5_15_08) & Viajes$edad >= 18 & Viajes$edad <= 35), "p5_15_08"] <- med_bus_2
+```
+
+```{r}
+med_bus_3 <- median(Viajes[Viajes$edad >= 35 & Viajes$edad <= 65, "p5_15_08"], na.rm = T)
+med_bus_3
+       
+Viajes[(is.na(Viajes$p5_15_08) & Viajes$edad > 35 & Viajes$edad <= 65), "p5_15_08"] <- med_bus_3
+```
+
+```{r}
+med_bus_4 <- median(Viajes[Viajes$edad > 65, "p5_15_08"], na.rm = T)
+med_bus_4
+       
+Viajes[(is.na(Viajes$p5_15_08) & Viajes$edad > 65), "p5_15_08"] <- med_bus_4
+
+```
+
+
+
+```{r}
+med_moto_1 <- median(Viajes[Viajes$edad < 18, "p5_15_09"], na.rm = T)
+med_moto_1
+Viajes[(is.na(Viajes$p5_15_09) & Viajes$edad < 18), "p5_15_09"] <- med_moto_1
+```
+
+```{r}
+med_moto_2 <- median(Viajes[Viajes$edad >= 18 & Viajes$edad <= 35, "p5_15_09"], na.rm = T)
+med_moto_2
+
+
+Viajes[(is.na(Viajes$p5_15_09) & Viajes$edad >= 18 & Viajes$edad <= 35), "p5_15_09"] <- med_moto_2
+```
+
+```{r}
+med_moto_3 <- median(Viajes[Viajes$edad >= 35 & Viajes$edad <= 65, "p5_15_09"], na.rm = T)
+med_moto_3
+       
+Viajes[(is.na(Viajes$p5_15_09) & Viajes$edad > 35 & Viajes$edad <= 65), "p5_15_09"] <- med_moto_3
+```
+
+```{r}
+med_moto_4 <- median(Viajes[Viajes$edad > 65, "p5_15_09"], na.rm = T)
+med_moto_4
+       
+Viajes[(is.na(Viajes$p5_15_09) & Viajes$edad > 65), "p5_15_09"] <- med_moto_4
+
+```
+
+
+
+
+```{r}
+med_Trole_1 <- median(Viajes[Viajes$edad < 18, "p5_15_10"], na.rm = T)
+med_Trole_1
+Viajes[(is.na(Viajes$p5_15_10) & Viajes$edad < 18), "p5_15_10"] <- med_Trole_1
+```
+
+```{r}
+med_Trole_2 <- median(Viajes[Viajes$edad >= 18 & Viajes$edad <= 35, "p5_15_10"], na.rm = T)
+med_Trole_2
+
+
+Viajes[(is.na(Viajes$p5_15_10) & Viajes$edad >= 18 & Viajes$edad <= 35), "p5_15_10"] <- med_Trole_2
+```
+
+```{r}
+med_Trole_3 <- median(Viajes[Viajes$edad >= 35 & Viajes$edad <= 65, "p5_15_10"], na.rm = T)
+med_Trole_3
+       
+Viajes[(is.na(Viajes$p5_15_10) & Viajes$edad > 35 & Viajes$edad <= 65), "p5_15_10"] <- med_Trole_3
+```
+
+```{r}
+med_Trole_4 <- median(Viajes[Viajes$edad > 65, "p5_15_10"], na.rm = T)
+med_Trole_4
+       
+Viajes[(is.na(Viajes$p5_15_10) & Viajes$edad > 65), "p5_15_10"] <- med_Trole_4
+
+```
+
+
+
+
+```{r}
+med_MMEXI_1 <- median(Viajes[Viajes$edad < 18, "p5_15_11"], na.rm = T)
+med_MMEXI_1
+Viajes[(is.na(Viajes$p5_15_11) & Viajes$edad < 18), "p5_15_11"] <- med_MMEXI_1
+```
+
+```{r}
+med_MMEXI_2 <- median(Viajes[Viajes$edad >= 18 & Viajes$edad <= 35, "p5_15_11"], na.rm = T)
+med_MMEXI_2
+
+
+Viajes[(is.na(Viajes$p5_15_11) & Viajes$edad >= 18 & Viajes$edad <= 35), "p5_15_11"] <- med_MMEXI_2
+```
+
+```{r}
+med_MMEXI_3 <- median(Viajes[Viajes$edad >= 35 & Viajes$edad <= 65, "p5_15_11"], na.rm = T)
+med_MMEXI_3
+       
+Viajes[(is.na(Viajes$p5_15_11) & Viajes$edad > 35 & Viajes$edad <= 65), "p5_15_11"] <- med_MMEXI_3
+```
+
+```{r}
+med_MMEXI_4 <- median(Viajes[Viajes$edad > 65, "p5_15_11"], na.rm = T)
+med_MMEXI_4
+       
+Viajes[(is.na(Viajes$p5_15_11) & Viajes$edad > 65), "p5_15_11"] <- med_MMEXI_4
+
+```
+
+
+```{r}
+med_Ligero_1 <- median(Viajes[Viajes$edad < 18, "p5_15_12"], na.rm = T)
+med_Ligero_1
+Viajes[(is.na(Viajes$p5_15_12) & Viajes$edad < 18), "p5_15_12"] <- med_Ligero_1
+```
+
+```{r}
+med_Ligero_2 <- median(Viajes[Viajes$edad >= 18 & Viajes$edad <= 35, "p5_15_12"], na.rm = T)
+med_Ligero_2
+
+
+Viajes[(is.na(Viajes$p5_15_12) & Viajes$edad >= 18 & Viajes$edad <= 35), "p5_15_12"] <- med_Ligero_2
+```
+
+```{r}
+med_Ligero_3 <- median(Viajes[Viajes$edad >= 35 & Viajes$edad <= 65, "p5_15_12"], na.rm = T)
+med_Ligero_3
+       
+Viajes[(is.na(Viajes$p5_15_12) & Viajes$edad > 35 & Viajes$edad <= 65), "p5_15_12"] <- med_Ligero_3
+```
+
+```{r}
+med_Ligero_4 <- median(Viajes[Viajes$edad > 65, "p5_15_12"], na.rm = T)
+med_Ligero_4
+       
+Viajes[(is.na(Viajes$p5_15_12) & Viajes$edad > 65), "p5_15_12"] <- med_Ligero_4
+
+```
+
+
+```{r}
+med_Suburbano_1 <- median(Viajes[Viajes$edad < 18, "p5_15_13"], na.rm = T)
+med_Suburbano_1
+Viajes[(is.na(Viajes$p5_15_13) & Viajes$edad < 18), "p5_15_13"] <- med_Suburbano_1
+```
+
+```{r}
+med_Suburbano_2 <- median(Viajes[Viajes$edad >= 18 & Viajes$edad <= 35, "p5_15_13"], na.rm = T)
+med_Suburbano_2
+
+
+Viajes[(is.na(Viajes$p5_15_13) & Viajes$edad >= 18 & Viajes$edad <= 35), "p5_15_13"] <- med_Suburbano_2
+```
+
+```{r}
+med_Suburbano_3 <- median(Viajes[Viajes$edad >= 35 & Viajes$edad <= 65, "p5_15_13"], na.rm = T)
+med_Suburbano_3
+       
+Viajes[(is.na(Viajes$p5_15_13) & Viajes$edad > 35 & Viajes$edad <= 65), "p5_15_13"] <- med_Suburbano_3
+```
+
+```{r}
+med_Suburbano_4 <- median(Viajes[Viajes$edad > 65, "p5_15_13"], na.rm = T)
+med_Suburbano_4
+       
+Viajes[(is.na(Viajes$p5_15_13) & Viajes$edad > 65), "p5_15_13"] <- med_Suburbano_4
+
+```
+
+
+```{r}
+med_Caminar_1 <- median(Viajes[Viajes$edad < 18, "p5_15_14"], na.rm = T)
+med_Caminar_1
+Viajes[(is.na(Viajes$p5_15_14) & Viajes$edad < 18), "p5_15_14"] <- med_Caminar_1
+```
+
+```{r}
+med_Caminar_2 <- median(Viajes[Viajes$edad >= 18 & Viajes$edad <= 35, "p5_15_14"], na.rm = T)
+med_Caminar_2
+
+
+Viajes[(is.na(Viajes$p5_15_14) & Viajes$edad >= 18 & Viajes$edad <= 35), "p5_15_14"] <- med_Caminar_2
+```
+
+```{r}
+med_Caminar_3 <- median(Viajes[Viajes$edad >= 35 & Viajes$edad <= 65, "p5_15_14"], na.rm = T)
+med_Caminar_3
+       
+Viajes[(is.na(Viajes$p5_15_14) & Viajes$edad > 35 & Viajes$edad <= 65), "p5_15_14"] <- med_Caminar_3
+```
+
+```{r}
+med_Caminar_4 <- median(Viajes[Viajes$edad > 65, "p5_15_14"], na.rm = T)
+med_Caminar_4
+       
+Viajes[(is.na(Viajes$p5_15_14) & Viajes$edad > 65), "p5_15_14"] <- med_Caminar_4
+
+```
+
+
+
+
+```{r}
+med_Mexicable_1 <- median(Viajes[Viajes$edad < 18, "p5_15_15"], na.rm = T)
+med_Mexicable_1
+Viajes[(is.na(Viajes$p5_15_15) & Viajes$edad < 18), "p5_15_15"] <- med_Mexicable_1
+```
+
+```{r}
+med_Mexicable_2 <- median(Viajes[Viajes$edad >= 18 & Viajes$edad <= 35, "p5_15_15"], na.rm = T)
+med_Mexicable_2
+
+
+Viajes[(is.na(Viajes$p5_15_15) & Viajes$edad >= 18 & Viajes$edad <= 35), "p5_15_15"] <- med_Mexicable_2
+```
+
+```{r}
+med_Mexicable_3 <- median(Viajes[Viajes$edad >= 35 & Viajes$edad <= 65, "p5_15_15"], na.rm = T)
+med_Mexicable_3
+       
+Viajes[(is.na(Viajes$p5_15_15) & Viajes$edad > 35 & Viajes$edad <= 65), "p5_15_15"] <- med_Mexicable_3
+```
+
+```{r}
+med_Mexicable_4 <- median(Viajes[Viajes$edad > 65, "p5_15_15"], na.rm = T)
+med_Mexicable_4
+       
+Viajes[(is.na(Viajes$p5_15_15) & Viajes$edad > 65), "p5_15_15"] <- med_Mexicable_4
+
+```
+
+
+```{r}
+med_Bicitaxi_1 <- median(Viajes[Viajes$edad < 18, "p5_15_16"], na.rm = T)
+med_Bicitaxi_1
+Viajes[(is.na(Viajes$p5_15_16) & Viajes$edad < 18), "p5_15_16"] <- med_Bicitaxi_1
+```
+
+```{r}
+med_Bicitaxi_2 <- median(Viajes[Viajes$edad >= 18 & Viajes$edad <= 35, "p5_15_16"], na.rm = T)
+med_Bicitaxi_2
+
+
+Viajes[(is.na(Viajes$p5_15_16) & Viajes$edad >= 18 & Viajes$edad <= 35), "p5_15_16"] <- med_Bicitaxi_2
+```
+
+```{r}
+med_Bicitaxi_3 <- median(Viajes[Viajes$edad >= 35 & Viajes$edad <= 65, "p5_15_16"], na.rm = T)
+med_Bicitaxi_3
+       
+Viajes[(is.na(Viajes$p5_15_16) & Viajes$edad > 35 & Viajes$edad <= 65), "p5_15_16"] <- med_Bicitaxi_3
+```
+
+```{r}
+med_Bicitaxi_4 <- median(Viajes[Viajes$edad > 65, "p5_15_16"], na.rm = T)
+med_Bicitaxi_4
+       
+Viajes[(is.na(Viajes$p5_15_16) & Viajes$edad > 65), "p5_15_16"] <- med_Bicitaxi_4
+
+```
+
+
+```{r}
+med_Mototaxi_1 <- median(Viajes[Viajes$edad < 18, "p5_15_17"], na.rm = T)
+med_Mototaxi_1
+Viajes[(is.na(Viajes$p5_15_17) & Viajes$edad < 18), "p5_15_17"] <- med_Mototaxi_1
+```
+
+```{r}
+med_Mototaxi_2 <- median(Viajes[Viajes$edad >= 18 & Viajes$edad <= 35, "p5_15_17"], na.rm = T)
+med_Mototaxi_2
+
+
+Viajes[(is.na(Viajes$p5_15_17) & Viajes$edad >= 18 & Viajes$edad <= 35), "p5_15_17"] <- med_Mototaxi_2
+```
+
+```{r}
+med_Mototaxi_3 <- median(Viajes[Viajes$edad >= 35 & Viajes$edad <= 65, "p5_15_17"], na.rm = T)
+med_Mototaxi_3
+       
+Viajes[(is.na(Viajes$p5_15_17) & Viajes$edad > 35 & Viajes$edad <= 65), "p5_15_17"] <- med_Mototaxi_3
+```
+
+```{r}
+med_Mototaxi_4 <- median(Viajes[Viajes$edad > 65, "p5_15_17"], na.rm = T)
+med_Mototaxi_4
+       
+Viajes[(is.na(Viajes$p5_15_17) & Viajes$edad > 65), "p5_15_17"] <- med_Mototaxi_4
+
+```
+
+
+```{r}
+med_Escolar_1 <- median(Viajes[Viajes$edad < 18, "p5_15_18"], na.rm = T)
+med_Escolar_1
+Viajes[(is.na(Viajes$p5_15_18) & Viajes$edad < 18), "p5_15_18"] <- med_Escolar_1
+```
+
+```{r}
+med_Escolar_2 <- median(Viajes[Viajes$edad >= 18 & Viajes$edad <= 35, "p5_15_18"], na.rm = T)
+med_Escolar_2
+
+
+Viajes[(is.na(Viajes$p5_15_18) & Viajes$edad >= 18 & Viajes$edad <= 35), "p5_15_18"] <- med_Escolar_2
+```
+
+```{r}
+med_Escolar_3 <- median(Viajes[Viajes$edad >= 35 & Viajes$edad <= 65, "p5_15_18"], na.rm = T)
+med_Escolar_3
+       
+Viajes[(is.na(Viajes$p5_15_18) & Viajes$edad > 35 & Viajes$edad <= 65), "p5_15_18"] <- med_Escolar_3
+```
+
+```{r}
+med_Escolar_4 <- median(Viajes[Viajes$edad > 65, "p5_15_18"], na.rm = T)
+med_Escolar_4
+       
+Viajes[(is.na(Viajes$p5_15_18) & Viajes$edad > 65), "p5_15_18"] <- med_Escolar_4
+
+```
+
+
+```{r}
+med_Personal_1 <- median(Viajes[Viajes$edad < 18, "p5_15_19"], na.rm = T)
+med_Personal_1
+Viajes[(is.na(Viajes$p5_15_19) & Viajes$edad < 18), "p5_15_19"] <- med_Personal_1
+```
+
+```{r}
+med_Personal_2 <- median(Viajes[Viajes$edad >= 18 & Viajes$edad <= 35, "p5_15_19"], na.rm = T)
+med_Personal_2
+
+
+Viajes[(is.na(Viajes$p5_15_19) & Viajes$edad >= 18 & Viajes$edad <= 35), "p5_15_19"] <- med_Personal_2
+```
+
+```{r}
+med_Personal_3 <- median(Viajes[Viajes$edad >= 35 & Viajes$edad <= 65, "p5_15_19"], na.rm = T)
+med_Personal_3
+       
+Viajes[(is.na(Viajes$p5_15_19) & Viajes$edad > 35 & Viajes$edad <= 65), "p5_15_19"] <- med_Personal_3
+```
+
+```{r}
+med_Personal_4 <- median(Viajes[Viajes$edad > 65, "p5_15_19"], na.rm = T)
+med_Personal_4
+       
+Viajes[(is.na(Viajes$p5_15_19) & Viajes$edad > 65), "p5_15_19"] <- med_Personal_4
+
+```
+
+
+```{r}
+med_Otro_1 <- median(Viajes[Viajes$edad < 18, "p5_15_20"], na.rm = T)
+med_Otro_1
+Viajes[(is.na(Viajes$p5_15_20) & Viajes$edad < 18), "p5_15_20"] <- med_Otro_1
+```
+
+```{r}
+med_Otro_2 <- median(Viajes[Viajes$edad >= 18 & Viajes$edad <= 35, "p5_15_20"], na.rm = T)
+med_Otro_2
+
+
+Viajes[(is.na(Viajes$p5_15_20) & Viajes$edad >= 18 & Viajes$edad <= 35), "p5_15_20"] <- med_Otro_2
+```
+
+```{r}
+med_Otro_3 <- median(Viajes[Viajes$edad >= 35 & Viajes$edad <= 65, "p5_15_20"], na.rm = T)
+med_Otro_3
+       
+Viajes[(is.na(Viajes$p5_15_20) & Viajes$edad > 35 & Viajes$edad <= 65), "p5_15_20"] <- med_Otro_3
+```
+
+```{r}
+med_Otro_4 <- median(Viajes[Viajes$edad > 65, "p5_15_20"], na.rm = T)
+med_Otro_4
+       
+Viajes[(is.na(Viajes$p5_15_20) & Viajes$edad > 65), "p5_15_20"] <- med_Otro_4
+
+```
+
+
+##### Para medianas de cuantas personas lo hago por tipo de transporte
+
+```{r}
+str(Viajes)
+
+med_Personas_1 <- median(Viajes[Viajes$p5_14_01 == 1, "p5_19"], na.rm = T)
+med_Personas_1
+Viajes[(is.na(Viajes$p5_19) & Viajes$p5_14_01 == 1), "p5_19"] <- med_Personas_1
+```
+
+```{r}
+med_Personas_2 <- median(Viajes[Viajes$p5_14_02 == 1, "p5_19"], na.rm = T)
+med_Personas_2
+
+Viajes[(is.na(Viajes$p5_19) & Viajes$p5_14_02 == 1), "p5_19"] <- med_Personas_2
+```
+
+```{r}
+med_Personas_3 <- median(Viajes[Viajes$p5_14_03 == 1, "p5_19"], na.rm = T)
+med_Personas_3
+
+Viajes[(is.na(Viajes$p5_19) & Viajes$p5_14_03 == 1), "p5_19"] <- med_Personas_3
+```
+
+```{r}
+med_Personas_4 <- median(Viajes[Viajes$p5_14_04 == 1, "p5_19"], na.rm = T)
+med_Personas_4
+
+Viajes[(is.na(Viajes$p5_19) & Viajes$p5_14_04 == 1), "p5_19"] <- med_Personas_4
+```
+
+```{r}
+med_Personas_5 <- median(Viajes[Viajes$p5_14_05 == 1, "p5_19"], na.rm = T)
+med_Personas_5
+
+Viajes[(is.na(Viajes$p5_19) & Viajes$p5_14_05 == 1), "p5_19"] <- med_Personas_5
+```
+
+```{r}
+med_Personas_6 <- median(Viajes[Viajes$p5_14_06 == 1, "p5_19"], na.rm = T)
+med_Personas_6
+
+Viajes[(is.na(Viajes$p5_19) & Viajes$p5_14_06 == 1), "p5_19"] <- med_Personas_6
+```
+
+```{r}
+med_Personas_7 <- median(Viajes[Viajes$p5_14_07 == 1, "p5_19"], na.rm = T)
+med_Personas_7
+
+Viajes[(is.na(Viajes$p5_19) & Viajes$p5_14_07 == 1), "p5_19"] <- med_Personas_7
+```
+
+```{r}
+med_Personas_8 <- median(Viajes[Viajes$p5_14_08 == 1, "p5_19"], na.rm = T)
+med_Personas_8
+
+Viajes[(is.na(Viajes$p5_19) & Viajes$p5_14_08 == 1), "p5_19"] <- med_Personas_8
+```
+
+```{r}
+med_Personas_9 <- median(Viajes[Viajes$p5_14_09 == 1, "p5_19"], na.rm = T)
+med_Personas_9
+
+Viajes[(is.na(Viajes$p5_19) & Viajes$p5_14_09 == 1), "p5_19"] <- med_Personas_9
+```
+
+```{r}
+med_Personas_10 <- median(Viajes[Viajes$p5_14_10 == 1, "p5_19"], na.rm = T)
+med_Personas_10
+
+Viajes[(is.na(Viajes$p5_19) & Viajes$p5_14_10 == 1), "p5_19"] <- med_Personas_10
+```
+
+```{r}
+med_Personas_11 <- median(Viajes[Viajes$p5_14_11 == 1, "p5_19"], na.rm = T)
+med_Personas_11
+
+Viajes[(is.na(Viajes$p5_19) & Viajes$p5_14_11 == 1), "p5_19"] <- med_Personas_11
+```
+
+```{r}
+med_Personas_12 <- median(Viajes[Viajes$p5_14_12 == 1, "p5_19"], na.rm = T)
+med_Personas_12
+
+Viajes[(is.na(Viajes$p5_19) & Viajes$p5_14_12 == 1), "p5_19"] <- med_Personas_12
+```
+
+```{r}
+med_Personas_13 <- median(Viajes[Viajes$p5_14_13 == 1, "p5_19"], na.rm = T)
+med_Personas_13
+
+Viajes[(is.na(Viajes$p5_19) & Viajes$p5_14_13 == 1), "p5_19"] <- med_Personas_13
+```
+
+```{r}
+med_Personas_14 <- median(Viajes[Viajes$p5_14_14 == 1, "p5_19"], na.rm = T)
+med_Personas_14
+
+Viajes[(is.na(Viajes$p5_19) & Viajes$p5_14_14 == 1), "p5_19"] <- med_Personas_14
+```
+
+```{r}
+med_Personas_15 <- median(Viajes[Viajes$p5_14_15 == 1, "p5_19"], na.rm = T)
+med_Personas_15
+
+Viajes[(is.na(Viajes$p5_19) & Viajes$p5_14_15 == 1), "p5_19"] <- med_Personas_15
+```
+
+```{r}
+med_Personas_16 <- median(Viajes[Viajes$p5_14_16 == 1, "p5_19"], na.rm = T)
+med_Personas_16
+
+Viajes[(is.na(Viajes$p5_19) & Viajes$p5_14_16 == 1), "p5_19"] <- med_Personas_16
+```
+
+```{r}
+med_Personas_17 <- median(Viajes[Viajes$p5_14_17 == 1, "p5_19"], na.rm = T)
+med_Personas_17
+
+Viajes[(is.na(Viajes$p5_19) & Viajes$p5_14_17 == 1), "p5_19"] <- med_Personas_17
+```
+
+```{r}
+med_Personas_18 <- median(Viajes[Viajes$p5_14_18 == 1, "p5_19"], na.rm = T)
+med_Personas_18
+
+Viajes[(is.na(Viajes$p5_19) & Viajes$p5_14_18 == 1), "p5_19"] <- med_Personas_18
+```
+
+```{r}
+med_Personas_19 <- median(Viajes[Viajes$p5_14_19 == 1, "p5_19"], na.rm = T)
+med_Personas_19
+
+Viajes[(is.na(Viajes$p5_19) & Viajes$p5_14_19 == 1), "p5_19"] <- med_Personas_19
+```
+
+```{r}
+med_Personas_20 <- median(Viajes[Viajes$p5_14_20 == 1, "p5_19"], na.rm = T)
+med_Personas_20
+
+Viajes[(is.na(Viajes$p5_19) & Viajes$p5_14_20 == 1), "p5_19"] <- med_Personas_20
+```
+
+
+```{r}
+Viajes[!complete.cases(Viajes),]
+str(Viajes)
+summary(Viajes)
+
+```
+
+##### De las que se puede hacer algo faltan: p5_21_1, p5_21_2, p5_23.
+
+```{r}
+
+
+
+
+
+```
+
+
 
 
 
@@ -4125,3 +4851,5 @@ Transporte[!complete.cases(Transporte),]
 ```
 
 ##### Las NAs que quedan de transporte son el codigo de estacion y esas yo creo que las podemos dejar vacias sin afectar el analisis.
+
+
