@@ -3781,6 +3781,13 @@ validez_edades
 ```
 
 
+#### Prueba de validez grupo de edades por genero
+```{r}
+
+lapply(validez_edades, "<", 50)
+
+```
+
 
 
 
