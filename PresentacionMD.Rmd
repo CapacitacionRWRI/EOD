@@ -1,0 +1,347 @@
+---
+title: "Presentacion Proporciones de NA por base da datos y por variable"
+author: "Gonzalo Arrangoiz"
+date: "8/3/2021"
+output: powerpoint_presentation
+---
+
+
+```{r Crear y establacer directorios de trabajo, include=FALSE}
+setwd("~/")
+
+if (!dir.exists("analisis_eod")) {
+  dir.create("analisis_eod")
+}
+setwd("~/analisis_eod")
+
+```
+
+
+
+```{r URL que contiene la descarga del archivo, include=FALSE}
+setwd("~/")
+
+url_eod <- "https://www.inegi.org.mx/contenidos/programas/eod/2017/datosabiertos/eod_2017_csv.zip"
+```
+
+
+
+
+```{r Variable con el nombre del archivo que interesa, include=FALSE}
+setwd("~/")
+
+eod_file <- "eod_2017_csv.zip"
+```
+
+
+
+```{r Verificación y descarga de bases de datos, include=FALSE}
+setwd("~/")
+
+if (!file.exists(eod_file)) {
+  download.file(url_eod, eod_file, mode = "wb")
+}
+
+if (!dir.exists("eod_2017_csv")) {
+  unzip(eod_file)
+}
+```
+
+
+```{r Cargar CSVs, include=FALSE}
+setwd("~/")
+
+library(readr)
+Hogar <- read.csv("thogar_eod2017/conjunto_de_datos/thogar.csv")
+Vivienda <- read.csv("tvivienda_eod2017/conjunto_de_datos/tvivienda.csv")
+PerfilSociodemografico <- read.csv("tsdem_eod2017/conjunto_de_datos/tsdem.csv")
+Viajes <- read.csv("tviaje_eod2017/conjunto_de_datos/tviaje.csv")
+Transporte <- read.csv("ttransporte_eod2017/conjunto_de_datos/ttransporte.csv")
+
+```
+
+
+
+```{r Explorar bases de datos Hogar, include=FALSE}
+head(Hogar)
+tail(Hogar)
+str(Hogar)
+summary(Hogar)
+Hogar[!complete.cases(Hogar),]
+
+```
+
+```{r Hogar proporciones, include=FALSE}
+a1 <- length(Hogar$p2_2)
+b1 <- length(which(is.na(Hogar$p2_2)))
+proporcionNAp2_2 <- round((b1 / a1)*100,2)
+
+a2 <- length(Hogar$p2_2b_1)
+b2 <- length(which(is.na(Hogar$p2_2b_1)))
+proporcionNAp2_2b_1 <- round((b2 / a2)*100,2)
+
+
+a3 <- length(Hogar$p2_2b_2)
+b3 <- length(which(is.na(Hogar$p2_2b_2)))
+proporcionNAp2_2b_2 <- round((b3 / a3)*100,2)
+
+a4 <- length(Hogar$p2_2b_3)
+b4 <- length(which(is.na(Hogar$p2_2b_3)))
+proporcionNAp2_2b_3 <- round((b4 / a4)*100,2)
+
+a5 <- length(Hogar$p2_2b_4)
+b5 <- length(which(is.na(Hogar$p2_2b_4)))
+proporcionNAp2_2b_4 <- round((b5 / a5)*100,2)
+
+
+HogarProporcionesNAs <- cbind(p2_2 = proporcionNAp2_2, p2_2b_1 =  proporcionNAp2_2b_1, p2_2b_2 = proporcionNAp2_2b_2, p2_2b_3 = proporcionNAp2_2b_3, p2_2b_4 = proporcionNAp2_2b_4)
+
+
+rownames(HogarProporcionesNAs) <- c("Proporcion de NA")
+
+HogarProporcionesNAs
+
+```
+
+***
+
+
+```{r echo=FALSE}
+
+knitr::kable(HogarProporcionesNAs, caption = 'Hogar')
+
+```
+
+
+
+
+
+```{r Explorar bases de datos PerfilSociodemografico, include=FALSE}
+head(PerfilSociodemografico)
+tail(PerfilSociodemografico)
+str(PerfilSociodemografico)
+summary(PerfilSociodemografico)
+PerfilSociodemografico[!complete.cases(PerfilSociodemografico),]
+
+```
+
+```{r PSD PROPORCIONES, include=FALSE}
+c1 <- length(PerfilSociodemografico$niv)
+d1 <- length(which(is.na(PerfilSociodemografico$niv)))
+proporcionNAniv <- round((d1 / c1)*100,2)
+
+c2 <- length(PerfilSociodemografico$gra)
+d2 <- length(which(is.na(PerfilSociodemografico$gra)))
+proporcionNAgra <- round((d2 / c2)*100,2)
+
+
+c3 <- length(PerfilSociodemografico$p3_7)
+d3 <- length(which(is.na(PerfilSociodemografico$p3_7)))
+proporcionNAp3_7 <- round((d3 / c3)*100,2)
+
+c4 <- length(PerfilSociodemografico$p3_8)
+d4 <- length(which(is.na(PerfilSociodemografico$p3_8)))
+proporcionNAp3_8 <- round((d4 / c4)*100,2)
+
+c5 <- length(PerfilSociodemografico$p4_2)
+d5 <- length(which(is.na(PerfilSociodemografico$p4_2)))
+proporcionNAp4_2 <- round((d5 / c5)*100,2)
+
+c6 <- length(PerfilSociodemografico$p4_3)
+d6 <- length(which(is.na(PerfilSociodemografico$p4_3)))
+proporcionNAp4_3 <- round((d6 / c6)*100,2)
+
+
+c7 <- length(PerfilSociodemografico$p5_4)
+d7 <- length(which(is.na(PerfilSociodemografico$p5_4)))
+proporcionNAp5_4 <- round((d7 / c7)*100,2)
+
+c8 <- length(PerfilSociodemografico$p6_4)
+d8 <- length(which(is.na(PerfilSociodemografico$p6_4)))
+proporcionNAp6_4 <- round((d8 / c8)*100,2)
+
+PerfilSociodemograficoProporcionNAs <- cbind(niv = proporcionNAniv, gra = proporcionNAgra, p3_7 = proporcionNAp3_7, p3_8 = proporcionNAp3_8, p4_2 = proporcionNAp4_2, p4_3 = proporcionNAp4_3, p5_4 = proporcionNAp5_4, p6_4 = proporcionNAp6_4)
+
+rownames(PerfilSociodemograficoProporcionNAs) <- c("Proporcion de NA")
+
+PerfilSociodemograficoProporcionNAs
+```
+
+***
+
+
+```{r echo=FALSE}
+knitr::kable(PerfilSociodemograficoProporcionNAs, caption = 'Perfil Sociodemografico')
+```
+
+
+
+```{r Explorar bases de datos Vivienda, include=FALSE}
+head(Vivienda)
+tail(Vivienda)
+str(Vivienda)
+summary(Vivienda)
+Vivienda[!complete.cases(Vivienda),]
+
+```
+
+```{r Vivienda proporciones, include=FALSE}
+e1 <- length(Vivienda$p1_3)
+f1 <- length(which(is.na(Vivienda$p1_3)))
+proporcionNAp1_3 <- round((f1 / e1)*100,2)
+
+
+ViviendaProporcionesNAs <- cbind(p1_3 = proporcionNAp1_3)
+
+
+rownames(ViviendaProporcionesNAs) <- c("Proporcion de NA")
+
+ViviendaProporcionesNAs
+
+```
+
+***
+
+
+```{r echo=FALSE}
+knitr::kable(ViviendaProporcionesNAs, caption = 'Vivienda')
+```
+
+
+
+
+```{r Explorar bases de datos Viajes, include=FALSE}
+head(Viajes)
+tail(Viajes)
+str(Viajes)
+summary(Viajes)
+Viajes[!complete.cases(Viajes),]
+
+```
+
+```{r Viajes Proporciones, include=FALSE}
+g1 <- length(Viajes$p5_18)
+h1 <- length(which(is.na(Viajes$p5_18)))
+proporcionNAp5_18 <- round((h1 / g1)*100,2)
+
+g2 <- length(Viajes$p5_21_1)
+h2 <- length(which(is.na(Viajes$p5_21_1)))
+proporcionNAp5_21_1 <- round((h2 / g2)*100,2)
+
+
+g3 <- length(Viajes$p5_21_2)
+h3 <- length(which(is.na(Viajes$p5_21_2)))
+proporcionNAp5_21_2 <- round((h3 / g3)*100,2)
+
+g4 <- length(Viajes$p5_22)
+h4 <- length(which(is.na(Viajes$p5_22)))
+proporcionNAp5_22 <- round((h4 / g4)*100,2)
+
+g5 <- length(Viajes$p5_23)
+h5 <- length(which(is.na(Viajes$p5_23)))
+proporcionNAp5_23 <- round((h5 / g5)*100,2)
+
+g6 <- length(Viajes$p5_24)
+h6 <- length(which(is.na(Viajes$p5_24)))
+proporcionNAp5_24 <- round((h6 / g6)*100,2)
+
+
+g7 <- length(Viajes$p5_25)
+h7 <- length(which(is.na(Viajes$p5_25)))
+proporcionNAp5_25 <- round((h7 / g7)*100,2)
+
+g8 <- length(Viajes$p5_27_1)
+h8 <- length(which(is.na(Viajes$p5_27_1)))
+proporcionNAp5_27_1 <- round((h8 / g8)*100,2)
+
+g9 <- length(Viajes$p5_27_2)
+h9 <- length(which(is.na(Viajes$p5_27_2)))
+proporcionNAp5_27_2 <- round((h9 / g9)*100,2)
+
+g10 <- length(Viajes$p5_27_3)
+h10 <- length(which(is.na(Viajes$p5_27_3)))
+proporcionNAp5_27_3 <- round((h10 / g10)*100,2)
+
+g11 <- length(Viajes$p5_27_4)
+h11 <- length(which(is.na(Viajes$p5_27_4)))
+proporcionNAp5_27_4 <- round((h11 / g11)*100,2)
+
+g12 <- length(Viajes$p5_27_5)
+h12 <- length(which(is.na(Viajes$p5_27_5)))
+proporcionNAp5_27_5 <- round((h12 / g12)*100,2)
+
+
+g13 <- length(Viajes$p5_27_6)
+h13 <- length(which(is.na(Viajes$p5_27_6)))
+proporcionNAp5_27_6 <- round((h13 / g13)*100,2)
+
+g14 <- length(Viajes$p5_27_7)
+h14 <- length(which(is.na(Viajes$p5_27_7)))
+proporcionNAp5_27_7 <- round((h14 / g14)*100,2)
+
+g15 <- length(Viajes$p5_27_8)
+h15 <- length(which(is.na(Viajes$p5_27_8)))
+proporcionNAp5_27_8 <- round((h15 / g15)*100,2)
+
+ViajesProporcionNAs <- cbind(p5_18 = proporcionNAp5_18, p5_21_1 = proporcionNAp5_21_1, p5_21_2 = proporcionNAp5_21_2, p5_22 = proporcionNAp5_22, p5_23 = proporcionNAp5_23, p5_24 = proporcionNAp5_24, p5_25 = proporcionNAp5_25, p5_27_1 = proporcionNAp5_27_1, p5_27_2 = proporcionNAp5_27_2, p5_27_3 = proporcionNAp5_27_3, p5_27_4 = proporcionNAp5_27_4, p5_27_5 = proporcionNAp5_27_5, p5_27_6 = proporcionNAp5_27_6, p5_27_7 = proporcionNAp5_27_7, p5_27_8 = proporcionNAp5_27_8)
+
+rownames(ViajesProporcionNAs) <- c("Proporcion de NA")
+
+ViajesProporcionNAs
+
+```
+
+***
+
+
+```{r echo=FALSE}
+knitr::kable(ViajesProporcionNAs, caption = 'Viajes')
+```
+
+
+
+```{r Explorar bases de datos Transporte, include=FALSE}
+head(Transporte)
+tail(Transporte)
+str(Transporte)
+summary(Transporte)
+Transporte[!complete.cases(Transporte),]
+
+```
+
+```{r Transporte proporciones, include=FALSE}
+i1 <- length(Transporte$p5_17_1c)
+j1 <- length(which(is.na(Transporte$p5_17_1c)))
+proporcionNAp5_17_1c <- round((j1 / i1)*100,2)
+
+i2 <- length(Transporte$p5_17_2c)
+j2 <- length(which(is.na(Transporte$p5_17_2c)))
+proporcionNAp5_17_2c <- round((j2 / i2)*100,2)
+
+
+TransporteProporcionNAs <- cbind(p5_17_1c = proporcionNAp5_17_1c, p5_17_2c = proporcionNAp5_17_2c)
+
+rownames(TransporteProporcionNAs) <- c("Proporcion de NA")
+
+TransporteProporcionNAs
+
+```
+
+***
+
+
+```{r echo=FALSE}
+knitr::kable(TransporteProporcionNAs, caption = 'Transporte')
+```
+
+***
+
+## Lista de proporciones de NA por base de datos
+```{r echo=FALSE, fig.height=5, fig.width=5}
+
+knitr::kables(list(knitr::kable(HogarProporcionesNAs, caption = 'Hogar'), knitr::kable(PerfilSociodemograficoProporcionNAs, caption = 'Perfil Sociodemografico'), knitr::kable(ViviendaProporcionesNAs, caption = 'Vivienda'), knitr::kable(ViajesProporcionNAs, caption = 'Viajes'), Transporte = knitr::kable(TransporteProporcionNAs, caption = 'Transporte')))
+
+
+
+```
+
