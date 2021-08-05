@@ -16,9 +16,14 @@ de la EOD 2017.
 Como resultado, se espera identificar los parámetros necesarios para replantear las unidades de análisis
 de manera que se logre robustecer la base de datos y eliminar posibles sesgos en su implementación
 
+```{r Setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_knit$set(root.dir = "~/")
+```
+
+
 ### Crear y establecer directorio de trabajo
 ```{r Crear y establacer directorios de trabajo, include=TRUE}
-setwd("~/")
 if (!dir.exists("analisis_eod")) {
   dir.create("analisis_eod")
 }
