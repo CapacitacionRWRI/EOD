@@ -1,81 +1,73 @@
 ---
-title: "Validacion Inicial Presentacion"
+title: "Validacion Unidades de Análisis EOD-2017"
 author: "Gonzalo Arrangoiz"
-date: "8/4/2021"
-output: word_document
+date: "8/5/2021"
+output:
+  html_document:
+    df_print: paged
 ---
 
-```{r Crear y establacer directorios de trabajo, include=FALSE}
-setwd("~/")
+# 1. Introducción
 
+Este análisis tiene el objetivo de validar la suficiencia de casos válidos para lograr muestras 
+estadísticamente representativas en los 194 distritos oricinales en los que se subdividió el análisis 
+de la EOD 2017.
+
+Como resultado, se espera identificar los parámetros necesarios para replantear las unidades de análisis
+de manera que se logre robustecer la base de datos y eliminar posibles sesgos en su implementación
+
+### Crear y establecer directorio de trabajo
+```{r Crear y establacer directorios de trabajo, include=TRUE}
+setwd("~/")
 if (!dir.exists("analisis_eod")) {
   dir.create("analisis_eod")
 }
 setwd("~/analisis_eod")
-
 ```
 
-
-
-```{r URL que contiene la descarga del archivo, include=FALSE}
-setwd("~/")
-
+### Descarga de archivos desde fuente INEGI
+Se verifica la existencia y en su caso de descargan y descomprimen los archivos conteniendo las bases 
+de datos de la EOD-2017 desde la URL de INEGI. Tamaño aproximado de la descarga 25 MB. Tamaño de las 
+bases de datos descomprimidas: 283 MB
+```{r URL que contiene la descarga del archivo, verificación y descarga, include=TRUE}
 url_eod <- "https://www.inegi.org.mx/contenidos/programas/eod/2017/datosabiertos/eod_2017_csv.zip"
-```
-
-
-
-
-```{r Variable con el nombre del archivo que interesa, include=FALSE}
-setwd("~/")
-
 eod_file <- "eod_2017_csv.zip"
-```
-
-
-
-```{r Verificación y descarga de bases de datos, include=FALSE}
-setwd("~/")
-
 if (!file.exists(eod_file)) {
   download.file(url_eod, eod_file, mode = "wb")
 }
-
 if (!dir.exists("eod_2017_csv")) {
   unzip(eod_file)
 }
 ```
 
-
-```{r Cargar CSVs, include=FALSE}
-setwd("~/")
-
-library(readr)
+### Asignación de bases de datos a variables en R
+```{r Cargar CSVs, include=TRUE}
 Hogar <- read.csv("thogar_eod2017/conjunto_de_datos/thogar.csv")
 Vivienda <- read.csv("tvivienda_eod2017/conjunto_de_datos/tvivienda.csv")
 PerfilSociodemografico <- read.csv("tsdem_eod2017/conjunto_de_datos/tsdem.csv")
 Viajes <- read.csv("tviaje_eod2017/conjunto_de_datos/tviaje.csv")
 Transporte <- read.csv("ttransporte_eod2017/conjunto_de_datos/ttransporte.csv")
-
 ```
 
-
-
-```{r Explorar base de datos PS, include=FALSE}
+# Exploración de los datos
+```{r Explorar base de datos PS, include=TRUE}
+knitr::opts_chunk$set(echo = TRUE)
 head(PerfilSociodemografico)
 tail(PerfilSociodemografico)
 str(PerfilSociodemografico)
 summary(PerfilSociodemografico)
+```
+Escribir conclusiones sobre la exploración de los datos
 
+Escribir estrategia para corregir clases de variables
+```{r, include=TRUE}
 PerfilSociodemografico$edad <- as.numeric(PerfilSociodemografico$edad)
 PerfilSociodemografico$p5_4 <- as.numeric(PerfilSociodemografico$p5_4)
 PerfilSociodemografico$p6_4 <- as.numeric(PerfilSociodemografico$p6_4)
-
 PerfilSociodemografico$sexo <- as.factor(PerfilSociodemografico$sexo)
 str(PerfilSociodemografico)
-
 ```
-
+ 
 
 ```{r include=FALSE}
 PerfilSociodemografico$distrito <- as.factor(PerfilSociodemografico$distrito)
@@ -84,92 +76,59 @@ length(levels(PerfilSociodemografico$distrito))
 ```
 
 
-
 ```{r include=FALSE}
-
 library(janitor)
-
 ```
 
 
-
-
 ```{r Hombres, include=FALSE}
-
 Hombres <- PerfilSociodemografico[PerfilSociodemografico$sexo == "1",]
 HombresMenor18 <- Hombres[Hombres$edad < 18,]
-
 hm18 <- tabyl(HombresMenor18, edad, distrito)
 hm18mat <- colSums(hm18[,-1])
 hm18tab <- knitr::kable(hm18mat)
 hm18tab
-
-
-
 HombresEntre18y35 <- Hombres[Hombres$edad >= 18 & Hombres$edad < 35,]
-
 hm1835 <- tabyl(HombresEntre18y35, edad, distrito)
 hm1835mat <- colSums(hm1835[,-1])
 hm1835tab <- knitr::kable(hm1835mat)
 hm1835tab
-
-
-
 HombresEntre35y65 <- Hombres[Hombres$edad >= 35 & Hombres$edad < 65,]
-
 hm3565 <- tabyl(HombresEntre35y65, edad, distrito)
 hm3565mat <- colSums(hm3565[,-1])
 hm3565tab <- knitr::kable(hm3565mat)
 hm3565tab
-
-
 HombresMayoresA65 <- Hombres[Hombres$edad >= 65,]
-
 hm65 <- tabyl(HombresMayoresA65, edad, distrito)
 hm65mat <- colSums(hm65[,-1])
 hm65tab <- knitr::kable(hm65mat)
 hm65tab
-
 ```
 
 
 
 ```{r Mujeres, include=FALSE}
-
 Mujeres <- PerfilSociodemografico[PerfilSociodemografico$sexo == "2",]
 MujeresMenor18 <- Mujeres[Mujeres$edad < 18,]
-
 mm18 <- tabyl(MujeresMenor18, edad, distrito)
 mm18mat <- colSums(mm18[,-1])
 mm18tab <- knitr::kable(mm18mat)
 mm18tab
-
-
-
 MujeresEntre18y35 <- Mujeres[Mujeres$edad >= 18 & Mujeres$edad < 35,]
-
 mm1835 <- tabyl(MujeresEntre18y35, edad, distrito)
 mm1835mat <- colSums(mm1835[,-1])
 mm1835tab <- knitr::kable(mm1835mat)
 mm1835tab
-
-
-
 MujeresEntre35y65 <- Mujeres[Mujeres$edad >= 35 & Mujeres$edad < 65,]
-
 mm3565 <- tabyl(MujeresEntre35y65, edad, distrito)
 mm3565mat <- colSums(mm3565[,-1])
 mm3565tab <- knitr::kable(mm3565mat)
 mm3565tab
-
-
 MujeresMayoresA65 <- Mujeres[Mujeres$edad >= 65,]
-
 mm65 <- tabyl(MujeresMayoresA65, edad, distrito)
 mm65mat <- colSums(mm65[,-1])
 mm65tab <- knitr::kable(mm65mat)
 mm65tab
-
 ```
 
 
@@ -177,13 +136,11 @@ mm65tab
 ### Lista de Validacion de datos Hombre
 ```{r echo=FALSE}
 knitr::kables(list(knitr::kable(hm18mat, caption = "Hombres Menores de 18"), knitr::kable(hm1835mat, caption = "Hombres 18 a 35"), knitr::kable(hm3565mat, caption = "Hombres 35 a 65"), knitr::kable(hm65mat, caption = "Hombres Mayores 65")))
-
 ```
 
 ### Lista de Validacion de datos Mujeres
 ```{r echo=FALSE}
 knitr::kables(list(knitr::kable(hm18mat, caption = "Mujeres Menores de 18"), knitr::kable(hm1835mat, caption = "Mujeres 18 a 35"), knitr::kable(hm3565mat, caption = "Mujeres 35 a 65"), knitr::kable(hm65mat, caption = "Mujeres Mayores 65")))
-
 ```
 
 ### Lista de distritos que no cumplen con la prueba de validez
@@ -191,13 +148,9 @@ knitr::kables(list(knitr::kable(hm18mat, caption = "Mujeres Menores de 18"), kni
 #### Para Hombres
 ```{r echo=FALSE}
 knitr::kables(list(knitr::kable(which(hm18mat < 50), caption = "Hombres Menores de 18"), knitr::kable(which(hm1835mat < 50), caption = "Hombres 18 a 35"), knitr::kable(which(hm3565mat < 50), caption = "Hombres 35 a 65"), knitr::kable(which(hm65mat < 50), caption = "Hombres Mayores 65")))
-
-
 ```
 
 #### Para Mujeres
 ```{r echo=FALSE}
 knitr::kables(list(knitr::kable(which(mm18mat < 50), caption = "Mujeres Menores de 18"), knitr::kable(which(mm1835mat < 50), caption = "Mujeres 18 a 35"), knitr::kable(which(mm3565mat < 50), caption = "Mujeres 35 a 65"), knitr::kable(which(mm65mat < 50), caption = "Mujeres Mayores 65")))
-
-
 ```
