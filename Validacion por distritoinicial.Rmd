@@ -5,7 +5,6 @@ date: "8/4/2021"
 output: word_document
 ---
 
-
 ```{r Crear y establacer directorios de trabajo, include=FALSE}
 setwd("~/")
 
@@ -177,12 +176,28 @@ mm65tab
 
 ### Lista de Validacion de datos Hombre
 ```{r echo=FALSE}
-knitr::kables(list(knitr::kable(hm18mat, caption = "Hombres Menores de 18"), Hombres18a35 = knitr::kable(hm1835mat, caption = "Hombres 18 a 35"), knitr::kable(hm3565mat, caption = "Hombres 35 a 65"), knitr::kable(hm65mat, caption = "Hombres Mayores 65")))
+knitr::kables(list(knitr::kable(hm18mat, caption = "Hombres Menores de 18"), knitr::kable(hm1835mat, caption = "Hombres 18 a 35"), knitr::kable(hm3565mat, caption = "Hombres 35 a 65"), knitr::kable(hm65mat, caption = "Hombres Mayores 65")))
 
 ```
 
 ### Lista de Validacion de datos Mujeres
 ```{r echo=FALSE}
-knitr::kables(list(knitr::kable(hm18mat, caption = "Mujeres Menores de 18"), Mujeres18a35 = knitr::kable(hm1835mat, caption = "Mujeres 18 a 35"), knitr::kable(hm3565mat, caption = "Mujeres 35 a 65"), knitr::kable(hm65mat, caption = "Mujeres Mayores 65")))
+knitr::kables(list(knitr::kable(hm18mat, caption = "Mujeres Menores de 18"), knitr::kable(hm1835mat, caption = "Mujeres 18 a 35"), knitr::kable(hm3565mat, caption = "Mujeres 35 a 65"), knitr::kable(hm65mat, caption = "Mujeres Mayores 65")))
+
+```
+
+### Lista de distritos que no cumplen con la prueba de validez
+
+#### Para Hombres
+```{r echo=FALSE}
+knitr::kables(list(knitr::kable(which(hm18mat < 50), caption = "Hombres Menores de 18"), knitr::kable(which(hm1835mat < 50), caption = "Hombres 18 a 35"), knitr::kable(which(hm3565mat < 50), caption = "Hombres 35 a 65"), knitr::kable(which(hm65mat < 50), caption = "Hombres Mayores 65")))
+
+
+```
+
+#### Para Mujeres
+```{r echo=FALSE}
+knitr::kables(list(knitr::kable(which(mm18mat < 50), caption = "Mujeres Menores de 18"), knitr::kable(which(mm1835mat < 50), caption = "Mujeres 18 a 35"), knitr::kable(which(mm3565mat < 50), caption = "Mujeres 35 a 65"), knitr::kable(which(mm65mat < 50), caption = "Mujeres Mayores 65")))
+
 
 ```
