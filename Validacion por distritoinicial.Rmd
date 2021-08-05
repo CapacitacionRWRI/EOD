@@ -152,10 +152,11 @@ knitr::kables(list(knitr::kable(hm18mat, caption = "Mujeres Menores de 18"), kni
 
 #### Para Hombres
 ```{r echo=FALSE}
-knitr::kables(list(knitr::kable(which(hm18mat < 50), caption = "Hombres Menores de 18"), knitr::kable(which(hm1835mat < 50), caption = "Hombres 18 a 35"), knitr::kable(which(hm3565mat < 50), caption = "Hombres 35 a 65"), knitr::kable(which(hm65mat < 50), caption = "Hombres Mayores 65")))
+knitr::kables(list(knitr::kable(as.numeric(hm18mat < 50), caption = "Hombres Menores de 18"), knitr::kable(as.numeric(hm1835mat < 50), caption = "Hombres 18 a 35"), knitr::kable(as.numeric(hm3565mat < 50), caption = "Hombres 35 a 65"), knitr::kable(as.numeric(hm65mat < 50), caption = "Hombres Mayores 65")))
 ```
 
 #### Para Mujeres
 ```{r echo=FALSE}
-knitr::kables(list(knitr::kable(which(mm18mat < 50), caption = "Mujeres Menores de 18"), knitr::kable(which(mm1835mat < 50), caption = "Mujeres 18 a 35"), knitr::kable(which(mm3565mat < 50), caption = "Mujeres 35 a 65"), knitr::kable(which(mm65mat < 50), caption = "Mujeres Mayores 65")))
+knitr::kables(list(knitr::kable(as.numeric(mm18mat < 50), caption = "Mujeres Menores de 18"), knitr::kable(as.numeric(mm1835mat < 50), caption = "Mujeres 18 a 35"), knitr::kable(as.numeric(mm3565mat < 50), caption = "Mujeres 35 a 65"), knitr::kable(as.numeric(mm65mat < 50), caption = "Mujeres Mayores 65")))
 ```
+
