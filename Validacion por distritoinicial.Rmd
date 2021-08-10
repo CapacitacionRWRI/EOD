@@ -206,7 +206,12 @@ DistritosPuroValido
 ```{r}
 
 ?apply
-CasosInsuficientesPorVariable <- knitr::kable(apply(MatrisDistGenero == 0 , 2 , sum), caption = "Casos Insuficientes Por Variable")
+CasosInsuficientesPorVariable1 <- apply(MatrisDistGenero == 0 , 2 , sum)
+max(CasosInsuficientesPorVariable1)
+VariableConMaxInsuficiencia <- knitr::kable(which.max(CasosInsuficientesPorVariable1), caption = "Variable Con Maxima Insuficiencia")
+VariableConMaxInsuficiencia
+
+CasosInsuficientesPorVariable <- knitr::kable(CasosInsuficientesPorVariable1, caption = "Casos Insuficientes Por Variable")
 CasosInsuficientesPorVariable
 
 ```
