@@ -1,0 +1,850 @@
+---
+title: "Notas R"
+author: "WRI"
+date: "8/10/2021"
+output: html_document
+---
+# El ABC de R
+
+## Instalar R
+ 
+* Dar click [aqui](https://cran.r-project.org) 
+* Dependiendo de la computadora que tengas seleccionas el link de Download que coincida con tu computadora. 
+* Se abre una pagina con unos paquetes y casi siempre es el primer File que sale pero puedes checar con la descripcion a la derecha y le picas.
+* Ya que lo tengas nada más pones continuar, aceptar, instalar a todos los usuarios, continuar y luego instalar. 
+
+
+Ya que lo tengas, si lo abres puedes programar ahi en la consola pero no es conveniente. Entonces vamos a bajar RStudio que es como un caparazon encima de R. 
+
+Para esto:
+
+* Dar click [aqui](https://www.rstudio.com)
+* Darle click en "Products" y luego "RStudio". 
+* Darle click en "RSTUDIO DESKTOP" y luego en "DOWNLOAD RSTUDIO DESKTOP OPEN SOURCE". 
+* Tienes que seleccionar otra vez que tipo de computadora tienes. 
+* Ya que se cargo le das doble click pones abrir y ya está. 
+
+
+
+ Ya que lo tengas abierto para cambiarle como se ve (en mac pero debe ser parecido en otras):
+* Te vas hasta arriba junto a la manzana donde dice RStudio y le picas.
+* Luego en Appearance le das click
+* Ahi le puedes poner el tipo de letra, tamaño y el fondo. 
+* Le picas "Apply" para ver como se ve.
+* Ya que tengas uno que te gusto le picas en "ok".
+
+
+
+Para crear un nuevo script le picas en el boton de hasta arriba a la izquierda que tiene un circulo verde con un más y le pones R Script. O también puedes poner "command shift n" en una mac.
+
+
+
+Luego para escribir algo por primera vez ponlo entre comillas como "Hola" y luego le picas en Run o, en una mac se puede, command enter. Y para guardarlo le picas en el boton de guardar en tu script que es el clásico boton de guardar. O "command s".
+
+
+
+Luego, para escribir algo que no afecte el codigo, como una nota, le pones un hashtag (#) antes y ya.
+
+
+
+## Tipo de variables (Atomicas)
+
+El operador para asignar un valor funcion a una variable es "<-".
+el equivalente en python es "="} 
+
+
+
+
+```{r}
+#Numero entero:
+x <- 2L # aqui le asigne a la x el valor de 2 y para que sea un numero entero le tengo que poner una L mayúscula a lado.
+
+#Para checar tipo de varibale:
+typeof(x) # Y te sale que es un "integer"
+
+
+#double:
+ y <-  2.5
+
+ typeof(y) #aqui te saldria que es un "double". Con estos puedes hacer operaciones numéricas.
+
+ 
+ #complejo:
+ z <- 3 + 2i
+
+ typeof(z) # te sale que es "complex"}
+
+
+ #character 
+a <- "h" 
+
+typeof(a) # y te sale que es un "character"}
+
+
+
+ #logico 
+
+ g1 <- T 
+
+ typeof(g1) # te sale que es un "logical"
+
+
+ g2 <- FALSE
+
+ typeof(g2) # te sale que es un "logical"
+
+```
+
+
+
+Ahora, si le picas a la escoba limpias todo tu environment y ya no tienes variables guardadas. 
+
+ 
+
+R solo guarda las variables, matrices, dataframes, etc., en la memoria RAM. Puedes guardar la sesion al finalizar, y cuando re inicies las volverá a cargar. 
+
+ 
+
+Tambien con el comando rm( ) puedes quitar variables en especifico. Si vuelves a definir una variable o cualquier objeto, R la sobre escribirá sin preguntar nada antes. Asi:
+
+```{r}
+k <- 5
+
+k # Sale 5
+
+rm(k)
+
+# k  # Ya no sale
+
+ 
+
+j <- 3
+
+j  # Sale 3
+
+j <- 4
+
+j  # Sale 4
+```
+
+
+
+### operaciones
+```{r}
+ A <- 10
+
+ B <- 5
+
+ C <- A + B # y te sale el resultado en tu environment a la derecha
+
+ C # y se imprime el resultado en la consola
+
+
+
+ var1 <- 2.5
+
+ var2 <- 4
+
+
+
+ resultado <- var1 / var2
+ resultado
+
+
+
+ answer <- sqrt(var2) # variables pueden servir como argumentos de una funcion.
+
+ answer
+
+
+
+ saludo <- "Hola"
+
+ nombre <- "Carlos"
+
+ mensaje <- paste(saludo, nombre)
+
+ mensaje
+ 
+```
+
+
+
+ ### operaciones logicas
+```{r}
+4 < 5 # te sale que es "TRUE"
+
+10 > 100  # te sale que es "FALSE"
+
+4 == 5 # te sale que es "FALSE"
+```
+
+### Resumen de operaciones
+```{r}
+# ==
+# !=
+# <
+# >
+# <=
+# >=
+# !
+# |
+# \&
+# isTRUE(x)
+```
+
+```{r}
+resultado <- 4 < 5
+
+resultado
+
+typeof(resultado)
+
+ 
+resultado2 <- !TRUE
+
+resultado2
+ 
+
+resultado | resultado2 # sale "TRUE" porque es uno u otro.
+
+resultado & resultado2 # sale "FALSE" porque estas requiriendo que los dos sean.
+
+ isTRUE(resultado)  # sale "TRUE"
+ 
+```
+
+
+ 
+## Vectores y otros fundamentos
+
+### vectores
+
+#### ¿Qué es un vector? ¿Como se indexiona en R?
+
+![Indexacion de vectores](https://media.geeksforgeeks.org/wp-content/uploads/20200409134016/Vectors-in-R.jpg)
+
+En otros programas como en Python la indexacion empieza en cero, por esto es importante recordar que en R se empieza en 1.
+
+```{r}
+# ¿Vector numérico?
+c(1,2,3,4,5)
+
+# ¿Vector de character? tiene que llevar comillas " "
+c("a", "b", "c", "d")
+
+# ¿Qué pasa si mezclas un numero con characters? 
+
+c(1,2,"a","b","c") # Convierte a los números en character por facilidad. 
+
+
+# Secreto de R: un solo número también se guarda como un vector de tamaño 1.
+vectorUno <- 3
+is.vector(vectorUno)
+
+```
+
+
+
+```{r}
+ Vector1 <- c(3, 45, 56, 732)
+
+ Vector1
+
+
+
+ is.numeric(Vector1) # Te regresa un "TRUE".
+
+ is.integer(Vector1) # Te regresa un "FALSE".
+ 
+ is.double(Vector1) # Te regresa un "TRUE" porque anticipa que vas a hacer operaciones numericas con este vector
+
+ 
+
+ Vector2 <- c(3L, 12L, 243L, 0L)
+
+
+
+ is.numeric(Vector2) # Te regresa un "TRUE".
+
+ is.integer(Vector2) # Te regresa un "TRUE"
+
+ is.double(Vector2) # Te regresa un "FALSE"
+
+ 
+
+ Vector3 <- c("a", "B23", "Hola", 7)
+
+ Vector3
+
+
+ is.character(Vector3) # Te regresa un "TRUE"
+
+ is.numeric(Vector3) # Te regresa un "FALSE"
+ 
+```
+
+
+```{r}
+seq()  # Sequence similar a ':'
+
+
+
+rep()  # Replicate
+
+ getwd()
+
+seq(1,15) # Te salen los números del 1 al 15
+
+1:15 # Igual
+```
+
+
+![argumentos de funcion](/Users/gonzaloarrangoiz/Desktop/Clases de R WRI/Argumentos.png)
+
+
+```{r}
+seq(1, 15, 2)  # Step
+
+z <- seq(1,15,4)
+
+z
+
+
+rep(3, 50)
+
+d <- rep(3, 50)
+
+
+rep("a", 5)
+
+
+rep(c(2, 4, 5), 5)
+
+
+rep(c(2, 4, 5), each = 5)
+
+ 
+x <- c(80, 20)
+
+y <- rep(x, 10)
+
+y
+ 
+```
+
+
+### [ ]
+
+```{r}
+w <- c("a", "b", "c", "d", "e")
+
+w
+
+
+w[1]  # Esto te da el primer elemento "a"
+
+w[-1]  # Todos excepto la primera
+
+v <- w[-3]  # Todos excepto el de en medio. Y lo meti en una variable v
+
+w[1:3]  # podemos poner un vector como este de secuencia
+
+w[c(1,3,5)]  # asi igual
+
+w[c(-2, -4)]  # Lo mismo con negativos
+
+w[-3 : -5]  
+
+```
+
+
+
+### Operaciones vectoriales
+```{r}
+x <- rnorm(5)
+
+x
+
+ 
+
+print(x[1])
+
+print(x[2])
+
+print(x[3])
+
+print(x[4])
+
+print(x[5])
+
+# podriamos usar un loop aqui para hacer operaciones con este vector, pero veremos loops más adelante y de todas maneras esta mejor de la siguiente manera con vectores:
+
+N <- 100
+
+a <- rnorm(N)
+
+b <- rnorm(N)
+
+
+c <- a * b   # Esto con loops es mucho más largo y complicado que una sola linea de codigo como esta y ese es la ventaja de hacer operaciones vectoriales en R. Y también es mucho más rápido para R hacer operaciones de esta manera que con loops.
+ 
+```
+
+
+
+### Funciones
+
+Ya vimos varias como saben.
+
+Estas son las que vimos. (ponganle un signo de interrogacion a la izquierda para aprender más sobre la funcion y ver que más se le puede agregar y vean que pasa para ver como les puede servir):
+```{r}
+?rnorm()
+?c()
+?seq()
+?print()
+?is.numeric()
+?is.integer()
+?is.double()
+?is.character()
+?typeof()
+?sqrt()
+?paste()
+
+```
+
+
+### Paquetes
+
+Los paquetes son collecciones de funciones de R, datos y codigo compilado en un formato bien definido. El directorio donde los paquetes se almacenan se llama biblioteca "library".
+
+ 
+A la derecha en la ventana de abajo dale click en "Packages" y ahi salen todos los paquetes. Los que estan seleccionados en azul son los que están activos ahora.
+
+Ahora, vamos a instalar el paquete ggplot2 como ejemplo.
+```{r}
+# install.packages(ggplot2)  # si no lo tienes instalado usa esto
+
+# Ahora para activar el paquete:
+library(ggplot2)
+
+# Para checar vemos que tenemos ya cosas del paquete:}
+?qplot
+?ggplot
+
+
+```
+
+
+## Matrices
+
+Indexacion
+![Indexacion de matrices](/Users/gonzaloarrangoiz/Desktop/Clases de R WRI/matindex.jpg)
+
+
+### Crear una matriz
+
+Nota al margen: en una matriz todas las columnas son de la misma clase, generalmente numérica, pues las matrices se suelen utilizar principalmente para operaciones de algebera lineal, cuando combinamos diferentes clases de columnas (numeros-caracteres-factores-etc) entonces tenemos un dataframe.}
+
+
+```{r}
+?matrix() # esta funcion dobla los vectores como una serpiente entonces no es tan buena herramienta. Se puede doblar de manera vertical u horizontal.
+
+?rbind() #lo que hace es juntar vectores en filas una en cima de la otra. Pero tienen que ser del mismo tamaño si no no se puede.
+
+?cbind() #conecta vectores en una matriz por columnas. Igual que rbind pero por columnas.
+```
+
+```{r}
+creando.mat <- 1:20
+
+creando.mat
+
+A <- matrix(creando.mat, 4, 5) # nada más checar que el número de columnas y filas coincida con el numero de datos para que se pueda hacer.
+
+A
+
+
+# Ya viendo la matriz como llegarias al numero 10?:
+ A[2,3] # Sale el número 10.
+
+  
+ 
+# Ahora para hacer la matriz por filas:
+B <- matrix(creando.mat, 4, 5, byrow=T)
+B
+ 
+ 
+# Ahora con esta matriz como llegarias al numero 10?:}
+B[2,5]
+
+
+
+
+# rbind():
+r1 <- c("Hola", "buenos", "dias")
+
+r2 <- c("que", "estés", "bien")
+
+r3 <- c(1, 2, 3)
+
+
+C <- rbind(r1, r2, r3)
+
+
+
+
+# cbind():
+
+c1 <- 1:5
+
+c2 <- -1:-5
+
+
+
+D <- cbind(c1, c2)
+
+D
+
+```
+
+
+
+### Nombrando las dimensiones
+
+Esta es la matriz E y hay 4 formas de sacar el valor c de esta matriz como se ve a continuacion:
+
+```{r include=FALSE}
+E <- rbind(Hola = c(1,2,3,4), Como = c("a","b","c","d"), Estas = c(5,"z",8,"k"))
+colnames(E) <- c("Muy", "Bien,", "Tu", "?")
+```
+
+```{r echo=FALSE}
+E
+```
+
+
+```{r}
+
+E[2,3]
+
+ 
+E["Como",3]
+
+ 
+E["Como","Tu"]
+
+ 
+E[2,"Tu"]
+
+```
+
+
+vectores:
+```{r}
+WRI <- 1:5
+WRI
+
+# Para ponerle nombres:
+
+# Checar nombres:
+names(WRI)  # sale NULL
+
+# Asignar nombres:
+
+names(WRI) <- c("a", "b", "c", "d", "e")
+
+WRI # ya salen los nombres
+
+# Para quitar nombres:
+names(WRI) <- NULL
+
+WRI # ya sale sin nombres
+
+```
+
+
+matrices:
+```{r}
+rep(c("a", "B", "zZ"), 3)
+vector.nombres <- rep(c("a", "B", "zZ"), each=3)
+
+matriz.nombres <- matrix(vector.nombres, 3, 3)
+
+matriz.nombres
+
+rownames(matriz.nombres) <- c("Hola", "como", "estas?")
+
+matriz.nombres # ya con nombres
+
+colnames(matriz.nombres) <- c("X", "Y", "Z")
+
+matriz.nombres # ya con nombres en columnas.
+
+```
+
+
+Que si queremos poner un cero en medio de la matriz en vez de una "B"
+```{r}
+matriz.nombres["como", "Y"] <- 0
+
+matriz.nombres
+
+rownames(matriz.nombres)
+rownames(matriz.nombres) <- NULL
+```
+
+
+
+
+### operaciones matriciales
+
+De aqui en adelante usaremos unas matrices que cree en R y se las paso.
+```{r echo=FALSE}
+#Anios
+Anios <- c("2008","2009","2010","2011","2012","2013","2014","2015","2016","2017")
+
+#Paises
+Paises <- c("Brazil","China","Colombia","Francia","Alemania","India","Indonesia","Mexico","CoreaSur","EstadosUnidos")
+
+#PIB (US a precios actuales)
+Brasil_PIB <- c(1695824565983.20,1667019783585.08,2208871646202.82,2616200980392.16,2465188674415.03,2472806919901.67,2455993625159.37,1802214373741.32,1795700168991.49,2062831045935.95)
+China_PIB <- c(4594307032660.79,5101703073086.04,6087163874512.21,7551500124203.36,8532229986993.65,9570406235659.64,10475682920594.50,11061553079876.40,11233276536737.20,12310409370892.80)
+Colombia_PIB <- c(242186950900.78,232397835678.34,286563105192.46,334943871931.75,370921320483.84,382116126448.56,381112119657.45,293481748240.78,282825009887.46,311883730690.13)
+France_PIB <- c(2918382891460.38,2690222283967.77,2642609548930.36,2861408170264.60,2683825225092.63,2811077725703.59,2852165760630.27,2438207896251.84,2471285607081.72,2595151045197.65)
+Germany_PIB <- c(3730027830672.33,3397791053070.30,3396354075663.73,3744408602683.94,3527344944139.83,3732743446218.92,3883920155292.26,3356235704119.75,3467498002104.33,3682602479929.42)
+India_PIB <- c(1198895582137.51,1341886602798.69,1675615335600.56,1823050405350.42,1827637859135.70,1856722121394.53,2039127446298.55,2103587817041.78,2294797978291.98,2652754685834.59)
+Indonesia_PIB <- c(510228634992.26,539580085612.40,755094160363.07,892969107923.09,917869910105.75,912524136718.02,890814755233.23,860854235065.08,931877364177.74,1015618742565.81)
+Mexico_PIB <- c(1109989063586.62,900045350649.35,1057801295584.05,1180489601957.61,1201089987015.45,1274443084716.57,1315351183524.54,1171867608197.72,1078490651625.31,1158913035796.37)
+SouthKorea_PIB <- c(1047339010225.25,943941876218.74,1144066965324.49,1253223044718.99,1278427634342.59,1370795199976.18,1484318219633.63,1465773245547.15,1500111596236.37,1623901496835.79)
+US_PIB <- c(14712844084000.00,14448933025000.00,14992052727000.00,15542581104000.00,16197007349000.00,16784849196000.00,17527163695000.00,18224704440000.00,18714960538000.00,19519353692000.00)
+#Matrix
+PIB <- rbind(Brasil_PIB,China_PIB,Colombia_PIB,France_PIB,Germany_PIB,India_PIB,Indonesia_PIB,Mexico_PIB,SouthKorea_PIB,US_PIB
+)
+rm(Brasil_PIB,China_PIB,Colombia_PIB,France_PIB,Germany_PIB,India_PIB,Indonesia_PIB,Mexico_PIB,SouthKorea_PIB,US_PIB
+)
+colnames(PIB) <- Anios
+rownames(PIB) <- Paises
+
+#Emisiones 
+Brasil_E	<- c(1455.75,1434.3,1541.66,1308.92,1354.86,1372.14,1416,1411.95,1381.11,1392.8)
+China_E <- c(8398.83,8992.51,9828.01,10784.95,11110.34,11568.63,11583.36,11578.25,11577.98,11780.99)
+Colombia_E <- c(316.82,320.76,325.18,182.62,181.2,188.01,195.2,195.22,222.64,216.67)
+France_E	<- c(430.57,412.26,415.98,373.01,375.99,376.73,343.69,349.62,349.4,352.07)
+Germany_E <-	c(891.36,834.11,864.77,812.55,826.67,843.91,803.64,807.42,810.14,792.63)
+India_E <-	c(2185.08,2339.28,2449.3,2798.04,2947.94,3003.54,3175.79,3188.03,3230.06,3356.7)
+Indonesia_E <-	c(2043.38,2478.22,2079.39,2335.3,2357.19,2294.34,2729.18,2776.53,2228.89,2275.4)
+Mexico_E	<- c(676.44,660.37,663.2,679.56,669.68,665.44,653.91,680.48,694.52,684.55)
+SouthKorea_E <-	c(531.57,545.24,598.01,631.29,636.13,635.5,624.8,646.29,657.41,670.81)
+US_E	<- c(6267.37,5865.85,6111.83,6235.82,5936.1,6056.33,6097.71,5973.16,5833.01,5766.92)
+#Matrix
+Emisiones <- rbind(Brasil_E,China_E,Colombia_E,France_E,Germany_E,India_E,Indonesia_E,Mexico_E,SouthKorea_E,US_E
+)
+rm(Brasil_E,China_E,Colombia_E,France_E,Germany_E,India_E,Indonesia_E,Mexico_E,SouthKorea_E,US_E
+)
+colnames(Emisiones) <- Anios
+rownames(Emisiones) <- Paises
+
+#Poblacion
+Brasil_Pob <- c(192030362,193886508,195713635,197514534,199287296,201035903,202763735,204471769,206163058,207833831)
+China_Pob <- c(1324655000,1331260000,1337705000,1344130000,1350695000,1357380000,1364270000,1371220000,1378665000,1386395000)
+Colombia_Pob <- c(44254972,44750054,45222699,45662747,46075721,46495492,46967706,47520667,48175048,48909844)
+France_Pob <- c(64374984,64707040,65027507,65342780,65659809,65998687,66312067,66548272,66724104,66864379)
+Germany_Pob <- c(82110097,81902307,81776930,80274983,80425823,80645605,80982500,81686611,82348669,82657002)
+India_Pob <- c(1200669765,1217726215,1234281170,1250288729,1265782790,1280846129,1295604184,1310152403,1324509589,1338658835)
+Indonesia_Pob <- c(235469762,238620563,241834215,245116206,248452413,251806402,255129004,258383256,261554226,264645886)
+Mexico_Pob <- c(110815271,112463887,114092963,115695473,117274155,118827161,120355128,121858258,123333376,124777324)
+SouthKorea_Pob <- c(49054708,49307835,49554112,49936638,50199853,50428893,50746659,51014947,51217803,51361911)
+US_Pob <- c(304093966,306771529,309321666,311556874,313830990,315993715,318301008,320635163,322941311,324985539)
+#Matrix
+Poblacion <- rbind(Brasil_Pob,China_Pob,Colombia_Pob,France_Pob,Germany_Pob,India_Pob,Indonesia_Pob,Mexico_Pob,SouthKorea_Pob,US_Pob)
+rm(Brasil_Pob,China_Pob,Colombia_Pob,France_Pob,Germany_Pob,India_Pob,Indonesia_Pob,Mexico_Pob,SouthKorea_Pob,US_Pob)
+colnames(Poblacion) <- Anios
+rownames(Poblacion) <- Paises
+```
+
+
+```{r}
+Emisiones
+
+rownames(Emisiones)
+
+colnames(Emisiones)
+
+Emisiones["Mexico", "2012"]
+ 
+PIB
+
+round(PIB / Poblacion, 1)
+
+
+round(Emisiones / Poblacion)
+ 
+```
+
+Igual se puede sumar, restar, multiplicar y asi.
+
+
+
+
+### Matplot()
+
+```{r}
+?matplot
+
+matplot(PIB)
+
+PIB
+
+t(PIB)
+
+matplot(t(PIB))
+
+matplot(t(PIB), type = "b", pch = 15:18, col= c(1:4, 6))
+
+legend("bottomleft", inset = 0.01, legend = Paises, col= c(1:4, 6), pch=15:18, horiz=F)
+
+ 
+
+matplot(t(PIB/Poblacion), type = "b", pch = 15:18, col= c(1:4, 6))
+
+legend("bottomleft", inset = 0.01, legend = Paises, col= c(1:4, 6), pch=15:18, horiz=F)
+
+ 
+
+matplot(t(Emisiones/PIB), type = "b", pch = 15:18, col= c(1:4, 6))
+
+legend("bottomleft", inset = 0.01, legend = Paises, col= c(1:4, 6), pch=15:18, horiz=F)
+
+```
+
+
+
+
+### Subsetting
+```{r}
+x <- c("a", "b", "c", "d", "e")
+
+x
+
+x[c(1,5)]
+
+x[1]
+```
+
+
+```{r}
+Emisiones
+
+Emisiones[1:3, 6:10]  # De primeros tres paises años 2013-2017
+
+Emisiones[c(1,10),] # Primer y último pais
+
+Emisiones[,c("2008", "2009")] # Todos los paises solo años 2008 y 2009
+
+
+Emisiones[1,]
+
+
+
+is.matrix(Emisiones[1,])
+
+is.vector(Emisiones[1,])
+
+ 
+
+Emisiones[1,5] # Igual el mismo problema porque R esta tratando de adivinar que quieres y como es de dos y una dimension respectivamente piensa que tal vez querias un vector.
+
+ 
+
+Emisiones[1,,drop=F] # Ya como matriz.
+
+Emisiones[1,5,drop=F] # Ya arreglado.
+
+```
+
+
+
+
+### Visualizando Subconjuntos
+```{r}
+matplot(t(PIB/Poblacion), type = "b", pch = 15:18, col= c(1:4, 6))
+
+legend("bottomleft", inset = 0.01, legend = Paises, col= c(1:4, 6), pch=15:18, horiz=F)
+
+ 
+
+# Para solo los primeros 10
+
+SoloTres <- (PIB/Poblacion)[1:3,]
+
+matplot(t(SoloTres), type = "b", pch = 15:18, col= c(1:4, 6))
+
+legend("bottomleft", inset = 0.01, legend = Paises[1:3], col= c(1:4, 6), pch=15:18, horiz=F)
+
+
+
+SoloMex <- (PIB/Poblacion)[8,,drop=F]
+
+matplot(t(SoloMex), type = "b", pch = 15:18, col= c(1:4, 6))
+
+legend("bottomleft", inset = 0.01, legend = Paises[8], col= c(1:4, 6), pch=15:18, horiz=F)
+
+```
+
+ 
+
+### Crear una funcion
+```{r}
+MiVisualizacion <- function(filas){
+
+Subdatos <- (PIB/Poblacion)[filas,,drop=F]
+
+matplot(t(Subdatos), type = "b", pch = 15:18, col= c(1:4, 6))
+
+legend("bottomleft", inset = 0.01, legend = Paises[filas], col= c(1:4, 6), pch=15:18, horiz=F)
+
+}
+
+
+MiVisualizacion(2:5)
+
+MiVisualizacion2 <- function(datos,filas){
+
+Subdatos <- datos[filas,,drop=F]
+
+matplot(t(Subdatos), type = "b", pch = 15:18, col= c(1:4, 6))
+
+legend("bottomleft", inset = 0.01, legend = Paises[filas], col= c(1:4, 6), pch=15:18, horiz=F)
+
+ }
+
+
+MiVisualizacion2(Emisiones, 2:5)
+
+```
+
+
+Agregando opciones predeterminadas:
+```{r}
+MiVisualizacion3 <- function(datos, filas = 1:10){
+
+Subdatos <- datos[filas,,drop=F]
+
+matplot(t(Subdatos), type = "b", pch = 15:18, col= c(1:4, 6))
+
+legend("bottomleft", inset = 0.01, legend = Paises[filas], col= c(1:4, 6), pch=15:18, horiz=F)
+
+}
+
+MiVisualizacion3(Emisiones)
+
+```
+
+
+
+### Análisis
+
+falta
+
+
