@@ -1,10 +1,8 @@
 ---
-title: "Validacion Unidades de Análisis EOD-2017"
+title: "Validacion Distritos"
 author: "Gonzalo Arrangoiz"
-date: "8/5/2021"
-output:
-  html_document:
-    df_print: paged
+date: "8/4/2021"
+output: html_document
 ---
 
 # 1. Introducción
@@ -85,78 +83,135 @@ length(levels(PerfilSociodemografico$distrito))
 library(janitor)
 ```
 
+# lib. necesaria para agrupar (group_by) y resumir (summarise)
+```{r Libreria necesaria}
+library(dplyr)
+```
 
-```{r Hombres, include=FALSE}
-Hombres <- PerfilSociodemografico[PerfilSociodemografico$sexo == "1",]
-HombresMenor18 <- Hombres[Hombres$edad < 18,]
-hm18 <- tabyl(HombresMenor18, edad, distrito)
-hm18mat <- colSums(hm18[,-1])
-hm18tab <- knitr::kable(hm18mat)
-hm18tab
-HombresEntre18y35 <- Hombres[Hombres$edad >= 18 & Hombres$edad < 35,]
-hm1835 <- tabyl(HombresEntre18y35, edad, distrito)
-hm1835mat <- colSums(hm1835[,-1])
-hm1835tab <- knitr::kable(hm1835mat)
-hm1835tab
-HombresEntre35y65 <- Hombres[Hombres$edad >= 35 & Hombres$edad < 65,]
-hm3565 <- tabyl(HombresEntre35y65, edad, distrito)
-hm3565mat <- colSums(hm3565[,-1])
-hm3565tab <- knitr::kable(hm3565mat)
-hm3565tab
-HombresMayoresA65 <- Hombres[Hombres$edad >= 65,]
-hm65 <- tabyl(HombresMayoresA65, edad, distrito)
-hm65mat <- colSums(hm65[,-1])
-hm65tab <- knitr::kable(hm65mat)
-hm65tab
+```{r}
+psociodem_gr <- group_by(PerfilSociodemografico, distrito)
+psociodem_gr
+```
+
+## Crea una tabla resumen agrupando operaciones por distrito
+## la operación suma los valores "TRUE" de la evaluación que se expresa
+```{r}
+dist_genero <- summarise(psociodem_gr, 
+                         n_mujeres = sum(sexo ==2), 
+                         n_hombres = sum(sexo == 1),
+                         hom_men_18 = sum(edad < 18 & sexo == 1),
+                         muj_men_18 = sum(edad < 18 & sexo == 2),
+                         hom_18_35 = sum(edad >= 18 & edad < 35 & sexo == 1),
+                         muj_18_35 = sum(edad >= 18 & edad < 35 & sexo == 2),
+                         hom_35_65 = sum(edad >= 35 & edad < 65 & sexo == 1),
+                         muj_35_65 = sum(edad >= 35 & edad < 65 & sexo == 2),
+                         hom_65ymas = sum(edad >= 65 & sexo == 1),
+                         muj_65ymas = sum(edad >= 65 & sexo == 2))
+
+knitr::kable(dist_genero, caption = "Casos por Grupo de Edad y Genero")
+```
+
+## Se crea una nueva tabla a la que se le agregan campos que evalúan el cumplimiento 
+## de la condición de 50 casos como mínimo en la base sociodemográfica.
+```{r}
+resultado_val <- transform(dist_genero, 
+                           v_tot_muj = ifelse(n_mujeres < 50, yes = 0, no = 1),
+                           v_tot_hom = ifelse(n_hombres < 50, yes = 0, no = 1),
+                           v_hom_menos18 = ifelse(hom_men_18 < 50, yes = 0, no = 1),
+                           v_muj_menos18 = ifelse(muj_men_18 < 50, yes = 0, no = 1),
+                           v_hom_18_35 = ifelse(hom_18_35 < 50, yes = 0, no = 1),
+                           v_muj_18_35 = ifelse(muj_18_35 < 50, yes = 0, no = 1),
+                           v_hom_35_65 = ifelse(hom_35_65 < 50, yes = 0, no = 1),
+                           v_muj_35_65 = ifelse(muj_35_65 < 50, yes = 0, no = 1),
+                           v_hom_65ymas = ifelse(hom_65ymas < 50, yes = 0, no = 1),
+                           v_muj_65ymas = ifelse(muj_65ymas < 50, yes = 0, no = 1))
+
+knitr::kable(resultado_val)
+```
+
+## Tabla deseada
+```{r}
+TablaDeseadaPre <- resultado_val[c(1,12:21)]
+TablaDeseada <- knitr::kable(resultado_val[c(1,12:21)], caption = "Validacion de datos por edades")
+TablaDeseada
+```
+
+
+## Lista de rangos de edad de si cumplen o no con validez
+```{r}
+list(HombresMenos18 = length(which(resultado_val$v_hom_menos18 == 0)) == 0,
+MujeresMenos18 = length(which(resultado_val$v_muj_menos18 == 0)) == 0,
+Hombres18a35 = length(which(resultado_val$v_hom_18_35 == 0)) == 0,
+Mujeres18a35 = length(which(resultado_val$v_muj_18_35 == 0)) == 0,
+Hombres35a65 = length(which(resultado_val$v_hom_35_65 == 0)) == 0,
+Mujeres35a65 = length(which(resultado_val$v_muj_35_65 == 0)) == 0,
+Hombres65mas = length(which(resultado_val$v_hom_65ymas == 0)) == 0,
+Mujeres65mas = length(which(resultado_val$v_muj_65ymas == 0)) == 0)
+```
+
+
+## Que variables analizadas aqui tienen puros casos validos
+```{r}
+CasosTotales <- nrow(resultado_val)
+list(HombresMenos18 = length(which(resultado_val$v_hom_menos18 == 1)) == CasosTotales,
+MujeresMenos18 = length(which(resultado_val$v_muj_menos18 == 1)) == CasosTotales,
+Hombres18a35 = length(which(resultado_val$v_hom_18_35 == 1)) == CasosTotales,
+Mujeres18a35 = length(which(resultado_val$v_muj_18_35 == 1)) == CasosTotales,
+Hombres35a65 = length(which(resultado_val$v_hom_35_65 == 1)) == CasosTotales,
+Mujeres35a65 = length(which(resultado_val$v_muj_35_65 == 1)) == CasosTotales,
+Hombres65mas = length(which(resultado_val$v_hom_65ymas == 1)) == CasosTotales,
+Mujeres65mas = length(which(resultado_val$v_muj_65ymas == 1)) == CasosTotales)
+
+```
+
+
+## ¿Cuáles distritos originales de la EOD tienen datos válidos para todas las variables analizadas?
+```{r}
+TablaDeseadaPre
+NumeroDeVariables <- ncol(TablaDeseadaPre) -1
+
+DistCasosValidos <- data.frame(rowSums(TablaDeseadaPre[,-1]), row.names = levels(PerfilSociodemografico$distrito))
+
+DistritosConTodoValido <- knitr::kable(DistCasosValidos < NumeroDeVariables, caption = "¿Casos Validos Para Todas las Variables?")
+
+DistritosConTodoValido
+
+
+
+```
+
+```{r}
+ResVal <- resultado_val[c(1,12:21)]
+# which.max(ResVal)
+?which.max
+
+```
+
+### Necesito convertir a matriz
+```{r}
+str(ResVal)
+MatrisDistGenero <- as.matrix(ResVal[,2:11])
+
+rownames(MatrisDistGenero) <- dist_genero$distrito
+MatrisDistGenero
+
+?apply
+DistritosPuroValido <- knitr::kable(which(apply(MatrisDistGenero == 1 , 1 , sum) == 10), caption = "Distritos con Todos Casos Validos")
+DistritosPuroValido
+```
+
+
+## ¿Cuáles variables son las que registran más distritos con casos insuficientes para pasar la prueba de validación?
+
+```{r}
+
+?apply
+CasosInsuficientesPorVariable <- knitr::kable(apply(MatrisDistGenero == 0 , 2 , sum), caption = "Casos Insuficientes Por Variable")
+CasosInsuficientesPorVariable
+
 ```
 
 
 
-```{r Mujeres, include=FALSE}
-Mujeres <- PerfilSociodemografico[PerfilSociodemografico$sexo == "2",]
-MujeresMenor18 <- Mujeres[Mujeres$edad < 18,]
-mm18 <- tabyl(MujeresMenor18, edad, distrito)
-mm18mat <- colSums(mm18[,-1])
-mm18tab <- knitr::kable(mm18mat)
-mm18tab
-MujeresEntre18y35 <- Mujeres[Mujeres$edad >= 18 & Mujeres$edad < 35,]
-mm1835 <- tabyl(MujeresEntre18y35, edad, distrito)
-mm1835mat <- colSums(mm1835[,-1])
-mm1835tab <- knitr::kable(mm1835mat)
-mm1835tab
-MujeresEntre35y65 <- Mujeres[Mujeres$edad >= 35 & Mujeres$edad < 65,]
-mm3565 <- tabyl(MujeresEntre35y65, edad, distrito)
-mm3565mat <- colSums(mm3565[,-1])
-mm3565tab <- knitr::kable(mm3565mat)
-mm3565tab
-MujeresMayoresA65 <- Mujeres[Mujeres$edad >= 65,]
-mm65 <- tabyl(MujeresMayoresA65, edad, distrito)
-mm65mat <- colSums(mm65[,-1])
-mm65tab <- knitr::kable(mm65mat)
-mm65tab
-```
 
-
-
-### Lista de Validacion de datos Hombre
-```{r echo=FALSE}
-knitr::kables(list(knitr::kable(hm18mat, caption = "Hombres Menores de 18"), knitr::kable(hm1835mat, caption = "Hombres 18 a 35"), knitr::kable(hm3565mat, caption = "Hombres 35 a 65"), knitr::kable(hm65mat, caption = "Hombres Mayores 65")))
-```
-
-### Lista de Validacion de datos Mujeres
-```{r echo=FALSE}
-knitr::kables(list(knitr::kable(hm18mat, caption = "Mujeres Menores de 18"), knitr::kable(hm1835mat, caption = "Mujeres 18 a 35"), knitr::kable(hm3565mat, caption = "Mujeres 35 a 65"), knitr::kable(hm65mat, caption = "Mujeres Mayores 65")))
-```
-
-### Lista de distritos que no cumplen con la prueba de validez
-
-#### Para Hombres
-```{r echo=FALSE}
-knitr::kables(list(knitr::kable(as.numeric(hm18mat < 50), caption = "Hombres Menores de 18"), knitr::kable(as.numeric(hm1835mat < 50), caption = "Hombres 18 a 35"), knitr::kable(as.numeric(hm3565mat < 50), caption = "Hombres 35 a 65"), knitr::kable(as.numeric(hm65mat < 50), caption = "Hombres Mayores 65")))
-```
-
-#### Para Mujeres
-```{r echo=FALSE}
-knitr::kables(list(knitr::kable(as.numeric(mm18mat < 50), caption = "Mujeres Menores de 18"), knitr::kable(as.numeric(mm1835mat < 50), caption = "Mujeres 18 a 35"), knitr::kable(as.numeric(mm3565mat < 50), caption = "Mujeres 35 a 65"), knitr::kable(as.numeric(mm65mat < 50), caption = "Mujeres Mayores 65")))
-```
 
