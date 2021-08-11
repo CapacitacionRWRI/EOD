@@ -54,7 +54,6 @@ Transporte <- read.csv("ttransporte_eod2017/conjunto_de_datos/ttransporte.csv")
 
 # Exploración de los datos
 ```{r Explorar base de datos PS, include=TRUE}
-knitr::opts_chunk$set(echo = TRUE)
 head(PerfilSociodemografico)
 tail(PerfilSociodemografico)
 str(PerfilSociodemografico)
