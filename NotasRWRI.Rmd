@@ -939,3 +939,298 @@ MiVisualizacion3(Emisiones)
 falta
 
 
+# Bases de datos
+
+Para esta seccion haremos un proyecto con la EOD 2017
+
+## 1. Introducción
+
+Este análisis tiene el objetivo de validar la suficiencia de casos válidos para lograr muestras 
+estadísticamente representativas en los 194 distritos oricinales en los que se subdividió el análisis 
+de la EOD 2017.
+
+Como resultado, se espera identificar los parámetros necesarios para replantear las unidades de análisis
+de manera que se logre robustecer la base de datos y eliminar posibles sesgos en su implementación
+
+### Importar base de datos a R (.csv)
+
+Dos métodos:
+
+#### Método 1: manual
+
+```{r}
+# basedatos <- read.csv(file.choose())
+
+# después de ejecutarla buscas y eliges la base de datos y ya
+
+# basedatos1
+
+```
+
+
+
+#### Método 2: con working directory
+
+```{r}
+getwd() # al ejecutarla sale tu working directory, es decir donde se guarda todo lo que estas haciendo en R.
+
+# Para cambiarlo:
+
+# Windows:
+
+# setwd("C:$\backslash \backslash$Users$\backslash \backslash$NombreGuardado$\backslash \backslash$Desktop$\backslash \backslash$Nombre de Folder")
+
+
+
+# Mac:
+
+# setwd("/Users/NombreGuardado/Desktop/Nombre de Folder")
+
+
+
+# rm(basedatos1)
+
+# basedatos1 <- read.csv("base de datos.csv")
+
+# basedatos1
+
+```
+
+#### Lo vamos a hacer casi como el segundo metodo pero es un como truco para que todo se guarde en el mismo lugar:
+
+##### Esta linea la tuve que correr yo en vez de la siguiente pero puede que con solo la siguiente les sirva a ustedes:
+```{r Setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_knit$set(root.dir = "~/")
+```
+
+##### La siguiente (no la voy a correr porque con el de antes me sirve a mi):
+```{r}
+#setwd("~/")
+```
+
+
+##### Crear y establecer directorio de trabajo
+```{r Crear y establacer directorios de trabajo, include=TRUE}
+if (!dir.exists("analisis_eod")) {
+  dir.create("analisis_eod")
+}
+setwd("~/analisis_eod")
+```
+
+##### Descarga de archivos desde fuente INEGI
+Se verifica la existencia y en su caso de descargan y descomprimen los archivos conteniendo las bases 
+de datos de la EOD-2017 desde la URL de INEGI. Tamaño aproximado de la descarga 25 MB. Tamaño de las 
+bases de datos descomprimidas: 283 MB
+```{r URL que contiene la descarga del archivo, verificación y descarga, include=TRUE}
+url_eod <- "https://www.inegi.org.mx/contenidos/programas/eod/2017/datosabiertos/eod_2017_csv.zip"
+eod_file <- "eod_2017_csv.zip"
+if (!file.exists(eod_file)) {
+  download.file(url_eod, eod_file, mode = "wb")
+}
+if (!dir.exists("eod_2017_csv")) {
+  unzip(eod_file)
+}
+```
+
+##### Asignación de bases de datos a variables en R
+```{r Cargar CSVs, include=TRUE}
+Hogar <- read.csv("thogar_eod2017/conjunto_de_datos/thogar.csv")
+Vivienda <- read.csv("tvivienda_eod2017/conjunto_de_datos/tvivienda.csv")
+PerfilSociodemografico <- read.csv("tsdem_eod2017/conjunto_de_datos/tsdem.csv")
+Viajes <- read.csv("tviaje_eod2017/conjunto_de_datos/tviaje.csv")
+Transporte <- read.csv("ttransporte_eod2017/conjunto_de_datos/ttransporte.csv")
+```
+
+
+#### Explorar Base de Datos
+
+Vamos a trabajar con la de Perfil Sociodemografico.
+
+```{r}
+PerfilSociodemografico
+
+nrow(PerfilSociodemografico)
+
+ncol(PerfilSociodemografico)
+
+head(PerfilSociodemografico)
+
+tail(PerfilSociodemografico)
+
+head(PerfilSociodemografico, 10)
+
+
+str(PerfilSociodemografico) # structure
+
+summary(PerfilSociodemografico)
+  
+```
+Escribir conclusiones sobre la exploración de los datos
+
+
+Escribir estrategia para corregir clases de variables
+```{r, include=TRUE}
+PerfilSociodemografico$edad <- as.numeric(PerfilSociodemografico$edad)
+PerfilSociodemografico$p5_4 <- as.numeric(PerfilSociodemografico$p5_4)
+PerfilSociodemografico$p6_4 <- as.numeric(PerfilSociodemografico$p6_4)
+PerfilSociodemografico$sexo <- as.factor(PerfilSociodemografico$sexo)
+PerfilSociodemografico$distrito <- as.factor(PerfilSociodemografico$distrito)
+str(PerfilSociodemografico)
+```
+ 
+
+
+#### $
+
+```{r}
+PerfilSociodemografico
+
+head(PerfilSociodemografico)
+
+PerfilSociodemografico[3, 3]
+
+PerfilSociodemografico[3, "n_ren"]
+
+
+
+PerfilSociodemografico$distrito
+
+PerfilSociodemografico[, "distrito"] # igual que el pasado
+
+PerfilSociodemografico$distrito[2]
+
+
+
+levels(PerfilSociodemografico$distrito) # Imprime los factores
+
+```
+
+
+#### Operaciones con bases de datos
+
+##### Subconjuntos
+```{r}
+PerfilSociodemografico[1:10,]
+
+PerfilSociodemografico[3:9,]
+
+PerfilSociodemografico[c(4,100),]
+
+
+
+is.data.frame(PerfilSociodemografico[1,]) # Ya no se necesita el drop=F
+
+
+
+is.data.frame(PerfilSociodemografico[,1]) # No es, aquí si se necesita
+
+is.data.frame(PerfilSociodemografico[,1, drop=F]) # Ahora si ya
+
+
+# Multiplicar y sumar (Aunque no hagan mucho sentido los ejemplos)
+
+head(PerfilSociodemografico)
+
+PerfilSociodemografico$edad * PerfilSociodemografico$distrito
+
+PerfilSociodemografico$edad + PerfilSociodemografico$distrito
+
+
+
+# Añadir columna
+head(PerfilSociodemografico)
+
+PerfilSociodemografico$MyCalc <-  PerfilSociodemografico$edad * PerfilSociodemografico$distrito
+
+
+PerfilSociodemografico$xyz <- 1:200117  # Se supone que si pongo por ejemplo 1:5 sirve y se reciclan los numeros pero no me esta funcionando en markdown entonces puse uno del tamano de las filas.
+
+head(PerfilSociodemografico, n=12)
+
+
+
+# Remover columna
+
+head(PerfilSociodemografico)
+
+PerfilSociodemografico$MyCalc <- NULL
+
+PerfilSociodemografico$xyz <- NULL
+
+head(PerfilSociodemografico)
+
+```
+
+
+
+#### Filtar base de datos
+```{r}
+head(PerfilSociodemografico)
+
+filtro <- PerfilSociodemografico$edad < 18
+
+PerfilSociodemografico[filtro,]
+
+
+# menores a 35 anios
+PerfilSociodemografico[PerfilSociodemografico$edad > 35,]
+
+# Mayor de 40 con nivel de escolaridad menor a 6
+PerfilSociodemografico[PerfilSociodemografico$edad > 40 & PerfilSociodemografico$niv < 6,]
+
+#Gente del distrito 17
+PerfilSociodemografico[PerfilSociodemografico$distrito ==  "17",]
+
+
+
+```
+
+Ejercicio: saca toda la informacion de mujeres menores de 18 con nivel de escolaridad menor a 5 del distrito 20.
+
+
+#### Intro qplot (Chance cambiar los ejemplos que no se ve tan bien)
+```{r}
+library(ggplot2)
+
+?qplot
+
+# edad
+qplot(data=PerfilSociodemografico, x=edad)
+# Viajes realizados por semana
+qplot(data=PerfilSociodemografico, x=p5_4)
+# Los dos pasados
+qplot(data=PerfilSociodemografico, x=edad, y=p5_4)
+
+
+# mappeando el tamaño
+qplot(data=PerfilSociodemografico, x=edad, y=p5_4, size = 3)
+
+
+# setting el tamaño
+qplot(data=PerfilSociodemografico, x=edad, y=p5_4, size = I(3))
+
+
+
+# mappeando el color
+qplot(data=PerfilSociodemografico, x=edad, y=p5_4, size = I(3), color = "blue")
+
+
+
+# setting el color
+qplot(data=PerfilSociodemografico, x=edad, y=p5_4, size = I(3), color = I("blue"))
+
+qplot(data=PerfilSociodemografico, x=edad, y=p5_4, geom="boxplot")
+
+
+
+qplot(data=PerfilSociodemografico, x=edad, y=p5_4)
+
+qplot(data=PerfilSociodemografico, x=edad, y=p5_4, size=I(4))
+
+qplot(data=PerfilSociodemografico, x=edad, y=p5_4, size=I(4), color = I("red"))
+
+qplot(data=PerfilSociodemografico, x=edad, y=p5_4, size=I(4), color = distrito)
+
+```
+ME SIGUE FALTANDO AGREGAR COSAS QUE TODAVIA NO HE MODIFICADO PARA EL EJERCICIO
