@@ -7,32 +7,73 @@ output: html_document
 # El ABC de R
 
 ## Instalar R
- 
+
 * Dar click [aqui](https://cran.r-project.org) 
+
 * Dependiendo de la computadora que tengas seleccionas el link de Download que coincida con tu computadora. 
+
 * Se abre una pagina con unos paquetes y casi siempre es el primer File que sale pero puedes checar con la descripcion a la derecha y le picas.
+
 * Ya que lo tengas nada más pones continuar, aceptar, instalar a todos los usuarios, continuar y luego instalar. 
 
 
 Ya que lo tengas, si lo abres puedes programar ahi en la consola pero no es conveniente. Entonces vamos a bajar RStudio que es como un caparazon encima de R. 
 
+
+
+
 Para esto:
 
 * Dar click [aqui](https://www.rstudio.com)
-* Darle click en "Products" y luego "RStudio". 
+
+* Darle click en "Products" y luego "RStudio".
+
 * Darle click en "RSTUDIO DESKTOP" y luego en "DOWNLOAD RSTUDIO DESKTOP OPEN SOURCE". 
+
 * Tienes que seleccionar otra vez que tipo de computadora tienes. 
+
 * Ya que se cargo le das doble click pones abrir y ya está. 
 
 
 
+
  Ya que lo tengas abierto para cambiarle como se ve (en mac pero debe ser parecido en otras):
-* Te vas hasta arriba junto a la manzana donde dice RStudio y le picas.
+ 
+* Te vas hasta arriba junto a la manzana donde dice RStudio y le picas en Preferences.
+
 * Luego en Appearance le das click
+
 * Ahi le puedes poner el tipo de letra, tamaño y el fondo. 
+
 * Le picas "Apply" para ver como se ve.
+
 * Ya que tengas uno que te gusto le picas en "ok".
 
+
+
+
+Para el indentado y hacer el codigo mas legible:
+
+* Te vas hasta arriba junto a la manzana donde dice RStudio y le picas en Preferences.
+
+* Luego te vas a code
+
+* Despues donde dice tab width le pones un numero entre 4 y 8 para que sea legible. 
+
+* Apply y Ok
+
+
+
+
+Para que sea visible el margen y no escribir tanto:
+
+* Te vas hasta arriba junto a la manzana donde dice RStudio y le picas en Preferences.
+
+* Luego te vas a code
+
+* Le das click en Display
+
+* Le pones que se vea el margen.
 
 
 Para crear un nuevo script le picas en el boton de hasta arriba a la izquierda que tiene un circulo verde con un más y le pones R Script. O también puedes poner "command shift n" en una mac.
@@ -44,6 +85,56 @@ Luego para escribir algo por primera vez ponlo entre comillas como "Hola" y lueg
 
 
 Luego, para escribir algo que no afecte el codigo, como una nota, le pones un hashtag (#) antes y ya.
+
+## Panel Layout
+![Panel Layout](/Users/gonzaloarrangoiz/Desktop/Clases de R WRI/RPanes.jpg)
+
+Editor:
+
+* Donde trabajas el codigo. 
+
+* Puedes hacer comentarios.
+
+* Puedes cambiar de tab como en safari y google chrome.
+
+* Para correr el codigo puedes poner run o con ctrl + enter.
+
+Environment: 
+
+* Hay dos tabs importantes: environment y history.
+  + History:
+    - Reporte de lo que haz hecho.
+    - Puede correr otra vez commandos si les das click doble vez.
+  + Environment: 
+    - Objetos que haz creado.
+    - Todos los objetos que tienes en la memoria.
+    - Da informacion util de los objetos.
+    - Puedes borrar todo con la escoba. 
+
+Consola: 
+
+* Puedes poner codigo y correrlo inmediatamente
+
+* Sale cualquier error o warning en la salida del codigo escrito ahi o en el editor. 
+  + error: inidica que el codigo esta mal. 
+  + warning: indica que puede estar mal o bien.
+
+
+Buscador:
+
+* Files: 
+  + Salen tus archivos y los puedes buscar.
+
+* Plots y Viewer:
+  + Aqui se pueden ver las graficas que hagas.
+  + Puedes guardar las graficas y todo con Export.
+
+* Packages:
+  + Instalar nuevos paquetes y descargarlos, pero mejor hacerlo con codigo.
+  
+* Help:
+  + Cuando pides ayuda aparece aqui la ayuda. 
+
 
 
 
