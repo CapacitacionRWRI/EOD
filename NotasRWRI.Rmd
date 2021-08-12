@@ -1189,48 +1189,51 @@ PerfilSociodemografico[PerfilSociodemografico$distrito ==  "17",]
 Ejercicio: saca toda la informacion de mujeres menores de 18 con nivel de escolaridad menor a 5 del distrito 20.
 
 
-#### Intro qplot (Chance cambiar los ejemplos que no se ve tan bien)
+#### Intro qplot (Aqui utilizare la base de datos de transporte para cambiarle y creo que hace mas sentido de lo que se puede hacer con tsdem)
 ```{r}
 library(ggplot2)
 
 ?qplot
 
-# edad
-qplot(data=PerfilSociodemografico, x=edad)
-# Viajes realizados por semana
-qplot(data=PerfilSociodemografico, x=p5_4)
-# Los dos pasados
-qplot(data=PerfilSociodemografico, x=edad, y=p5_4)
+str(Transporte)
+
+# Tipo de transporte utilizado
+qplot(data=Transporte, x=p5_14)
+# Gasto por transporte
+qplot(data=Transporte, x=p5_16_2)
+# Los dos juntos: gasto por tipo de transporte
+qplot(data=Transporte, x=p5_14, y=p5_16_2)
 
 
 # mappeando el tamaño
-qplot(data=PerfilSociodemografico, x=edad, y=p5_4, size = 3)
+qplot(data=Transporte, x=p5_14, y=p5_16_2, size = 3)
 
 
 # setting el tamaño
-qplot(data=PerfilSociodemografico, x=edad, y=p5_4, size = I(3))
+qplot(data=Transporte, x=p5_14, y=p5_16_2, size = I(3))
 
 
 
 # mappeando el color
-qplot(data=PerfilSociodemografico, x=edad, y=p5_4, size = I(3), color = "blue")
+qplot(data=Transporte, x=p5_14, y=p5_16_2, size = I(3), color = "blue")
 
 
 
 # setting el color
-qplot(data=PerfilSociodemografico, x=edad, y=p5_4, size = I(3), color = I("blue"))
+qplot(data=Transporte, x=p5_14, y=p5_16_2, size = I(3), color = I("blue"))
 
-qplot(data=PerfilSociodemografico, x=edad, y=p5_4, geom="boxplot")
+qplot(data=Transporte, x=p5_14, y=p5_16_2, geom="boxplot")
 
 
 
-qplot(data=PerfilSociodemografico, x=edad, y=p5_4)
+qplot(data=Transporte, x=p5_14, y=p5_16_2)
 
-qplot(data=PerfilSociodemografico, x=edad, y=p5_4, size=I(4))
+qplot(data=Transporte, x=p5_14, y=p5_16_2, size=I(4))
 
-qplot(data=PerfilSociodemografico, x=edad, y=p5_4, size=I(4), color = I("red"))
+qplot(data=Transporte, x=p5_14, y=p5_16_2, size=I(4), color = I("red"))
 
-qplot(data=PerfilSociodemografico, x=edad, y=p5_4, size=I(4), color = distrito)
+qplot(data=Transporte, x=p5_14, y=p5_16_2, size=I(4), color = sexo)
 
 ```
+
 ME SIGUE FALTANDO AGREGAR COSAS QUE TODAVIA NO HE MODIFICADO PARA EL EJERCICIO
