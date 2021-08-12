@@ -261,7 +261,7 @@ j  # Sale 4
 
 
 
- ### operaciones logicas
+### operaciones logicas
 ```{r}
 4 < 5 # te sale que es "TRUE"
 
@@ -1188,6 +1188,201 @@ PerfilSociodemografico[PerfilSociodemografico$distrito ==  "17",]
 
 Ejercicio: saca toda la informacion de mujeres menores de 18 con nivel de escolaridad menor a 5 del distrito 20.
 
+### Ya con estos conocimientos podemos hacer las pruebas de validacion con el criterio establecido de que debe haber al menos 50 casos por grupo de edad y genero:
+
+
+#### lib. necesaria para agrupar (group_by) y resumir (summarise)
+```{r Libreria necesaria}
+library(dplyr)
+```
+
+```{r}
+psociodem_gr <- group_by(PerfilSociodemografico, distrito)
+psociodem_gr
+```
+
+##### Crea una tabla resumen agrupando operaciones por distrito
+##### la operación suma los valores "TRUE" de la evaluación que se expresa
+```{r}
+dist_genero <- summarise(psociodem_gr, 
+                         n_mujeres = sum(sexo ==2), 
+                         n_hombres = sum(sexo == 1),
+                         hom_men_18 = sum(edad < 18 & sexo == 1),
+                         muj_men_18 = sum(edad < 18 & sexo == 2),
+                         hom_18_35 = sum(edad >= 18 & edad < 35 & sexo == 1),
+                         muj_18_35 = sum(edad >= 18 & edad < 35 & sexo == 2),
+                         hom_35_65 = sum(edad >= 35 & edad < 65 & sexo == 1),
+                         muj_35_65 = sum(edad >= 35 & edad < 65 & sexo == 2),
+                         hom_65ymas = sum(edad >= 65 & sexo == 1),
+                         muj_65ymas = sum(edad >= 65 & sexo == 2))
+
+knitr::kable(dist_genero, caption = "Casos por Grupo de Edad y Genero")
+```
+
+##### Se crea una nueva tabla a la que se le agregan campos que evalúan el cumplimiento 
+##### de la condición de 50 casos como mínimo en la base sociodemográfica.
+```{r}
+resultado_val <- transform(dist_genero, 
+                           v_tot_muj = ifelse(n_mujeres < 50, yes = 0, no = 1),
+                           v_tot_hom = ifelse(n_hombres < 50, yes = 0, no = 1),
+                           v_hom_menos18 = ifelse(hom_men_18 < 50, yes = 0, no = 1),
+                           v_muj_menos18 = ifelse(muj_men_18 < 50, yes = 0, no = 1),
+                           v_hom_18_35 = ifelse(hom_18_35 < 50, yes = 0, no = 1),
+                           v_muj_18_35 = ifelse(muj_18_35 < 50, yes = 0, no = 1),
+                           v_hom_35_65 = ifelse(hom_35_65 < 50, yes = 0, no = 1),
+                           v_muj_35_65 = ifelse(muj_35_65 < 50, yes = 0, no = 1),
+                           v_hom_65ymas = ifelse(hom_65ymas < 50, yes = 0, no = 1),
+                           v_muj_65ymas = ifelse(muj_65ymas < 50, yes = 0, no = 1))
+
+knitr::kable(resultado_val)
+```
+
+##### Tabla deseada
+```{r}
+TablaDeseadaPre <- resultado_val[c(1,12:21)]
+TablaDeseada <- knitr::kable(resultado_val[c(1,12:21)], caption = "Validacion de datos por edades")
+TablaDeseada
+```
+
+
+##### Lista de rangos de edad de si cumplen o no con validez
+```{r}
+list(HombresMenos18 = length(which(resultado_val$v_hom_menos18 == 0)) == 0,
+MujeresMenos18 = length(which(resultado_val$v_muj_menos18 == 0)) == 0,
+Hombres18a35 = length(which(resultado_val$v_hom_18_35 == 0)) == 0,
+Mujeres18a35 = length(which(resultado_val$v_muj_18_35 == 0)) == 0,
+Hombres35a65 = length(which(resultado_val$v_hom_35_65 == 0)) == 0,
+Mujeres35a65 = length(which(resultado_val$v_muj_35_65 == 0)) == 0,
+Hombres65mas = length(which(resultado_val$v_hom_65ymas == 0)) == 0,
+Mujeres65mas = length(which(resultado_val$v_muj_65ymas == 0)) == 0)
+```
+
+
+##### Que variables analizadas aqui tienen puros casos validos
+```{r}
+CasosTotales <- nrow(resultado_val)
+list(HombresMenos18 = length(which(resultado_val$v_hom_menos18 == 1)) == CasosTotales,
+MujeresMenos18 = length(which(resultado_val$v_muj_menos18 == 1)) == CasosTotales,
+Hombres18a35 = length(which(resultado_val$v_hom_18_35 == 1)) == CasosTotales,
+Mujeres18a35 = length(which(resultado_val$v_muj_18_35 == 1)) == CasosTotales,
+Hombres35a65 = length(which(resultado_val$v_hom_35_65 == 1)) == CasosTotales,
+Mujeres35a65 = length(which(resultado_val$v_muj_35_65 == 1)) == CasosTotales,
+Hombres65mas = length(which(resultado_val$v_hom_65ymas == 1)) == CasosTotales,
+Mujeres65mas = length(which(resultado_val$v_muj_65ymas == 1)) == CasosTotales)
+
+```
+
+
+##### ¿Cuáles distritos originales de la EOD tienen datos válidos para todas las variables analizadas?
+```{r}
+TablaDeseadaPre
+NumeroDeVariables <- ncol(TablaDeseadaPre) -1
+
+DistCasosValidos <- data.frame(rowSums(TablaDeseadaPre[,-1]), row.names = levels(PerfilSociodemografico$distrito))
+
+DistritosConTodoValido <- knitr::kable(DistCasosValidos < NumeroDeVariables, caption = "¿Casos Validos Para Todas las Variables?")
+
+DistritosConTodoValido
+
+
+
+```
+
+```{r}
+ResVal <- resultado_val[c(1,12:21)]
+# which.max(ResVal)
+?which.max
+
+```
+
+###### Necesito convertir a matriz
+```{r}
+str(ResVal)
+MatrisDistGenero <- as.matrix(ResVal[,2:11])
+
+rownames(MatrisDistGenero) <- dist_genero$distrito
+MatrisDistGenero
+
+?apply
+DistritosPuroValido <- knitr::kable(which(apply(MatrisDistGenero == 1 , 1 , sum) == 10), caption = "Distritos con Todos Casos Validos")
+DistritosPuroValido
+```
+
+
+##### ¿Cuáles variables son las que registran más distritos con casos insuficientes para pasar la prueba de validación?
+
+```{r}
+
+?apply
+CasosInsuficientesPorVariable1 <- apply(MatrisDistGenero == 0 , 2 , sum)
+max(CasosInsuficientesPorVariable1)
+VariableConMaxInsuficiencia <- knitr::kable(which.max(CasosInsuficientesPorVariable1), caption = "Variable Con Maxima Insuficiencia")
+VariableConMaxInsuficiencia
+
+CasosInsuficientesPorVariable <- knitr::kable(CasosInsuficientesPorVariable1, caption = "Casos Insuficientes Por Variable")
+CasosInsuficientesPorVariable
+
+```
+
+
+
+ENTRE ESTO Y LO SIGUIENTE FALTA!
+
+
+## Construyendo base de datos 
+Voy a guardar esta parte para aqui poner yo creo que los nuevos factores que o cualquier columna que se le necesite agregar a la base de datos de Perfil Sociodemografico que creo que lo hicieron en la nota tecnica.
+
+De estos siguientes tres vectores armar una base de datos con nombres en las columnas:
+```{r}
+
+```
+
+
+mibd <- data.frame(vector1, vector2, vector3) # como cbind()
+
+head(mibd)
+
+colnames(midb) <- c("Pais", "Codigo", "Region")
+
+
+Ahora borrarla y volver a crearla pero ahora asignandole el nombre de las columnas desde el principio:
+
+rm(mibd)
+
+mibd <- data.frame(Pais = vector1, Codigo = vector2, Region = vector3)
+
+head(mibd)
+
+summary(mibd)
+
+#### Fusionar base de datos
+head(PerfilSociodemografico)
+head(mibd)
+
+
+Vamos a fusionar por código ya que es menos probable que existan typos ahí y son universales:
+
+fusionado <- merge(PerfilSociodemografico, mibd, by.x = "Country.Code", by.y = "Code")
+
+head(fusionado)
+
+
+Remover columna extra que hay:
+
+fusionado$Country <- NULL
+
+str(fusionado)
+
+tail(fusionado)
+
+
+
+
+
+
+
+
+# Visualizaciones
 
 #### Intro qplot (Aqui utilizare la base de datos de transporte para cambiarle y creo que hace mas sentido de lo que se puede hacer con tsdem)
 ```{r}
@@ -1234,6 +1429,33 @@ qplot(data=Transporte, x=p5_14, y=p5_16_2, size=I(4), color = I("red"))
 
 qplot(data=Transporte, x=p5_14, y=p5_16_2, size=I(4), color = sexo)
 
+
+
 ```
 
-ME SIGUE FALTANDO AGREGAR COSAS QUE TODAVIA NO HE MODIFICADO PARA EL EJERCICIO
+```{r}
+# Figuras
+qplot(data=Transporte, x=p5_14, y=p5_16_2, size=I(4), color = sexo,
+shape=I(17))
+
+```
+
+![Mas Figuras aqui](/Users/gonzaloarrangoiz/Desktop/Clases de R WRI/Rsymbols.png)
+
+
+```{r}
+# Transparencia
+
+qplot(data=Transporte, x=p5_14, y=p5_16_2, color=sexo, size=I(5),
+shape=I(19), alpha=I(0.6))
+
+```
+
+```{r}
+# Título
+
+qplot(data=Transporte, x=p5_14, y=p5_16_2, color=sexo, size=I(5),
+shape=I(19), alpha=I(0.6), main="Gasto por tipo de transporte")
+
+```
+
