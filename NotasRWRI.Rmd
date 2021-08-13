@@ -939,6 +939,13 @@ MiVisualizacion3(Emisiones)
 falta
 
 
+# Dplyr Tidyverse
+
+Chance aqui agregar seccion de dplyr 
+
+
+
+
 # Bases de datos
 
 Para esta seccion haremos un proyecto con la EOD 2017
@@ -1464,7 +1471,15 @@ knitr::kables(list(knitr::kable(HogarProporcionesNAs, caption = 'Hogar'), knitr:
 
 ```
 
-SOLO ME FALTA AQUI YA PONER EL ANALISIS DE LAS PROPORCIONES DE LOS NA Y CON LOS QUE SE DEBA CAMBIAR PONERLES LA MEDIANA O SI AVERIGUO COMO CON REGRESION.
+
+##### Analisis de lo anterior (no se que proporcion usar para decidir si se puede estimar bien o no):
+Viendo la lista de los de perfil sociodemografico:
+```{r}
+knitr::kable(PerfilSociodemograficoProporcionNAs, caption = 'Perfil Sociodemografico')
+```
+
+
+SOLO ME FALTA AQUI YA PONER EL ANALISIS DE LAS PROPORCIONES DE LOS NA Y CON LOS QUE SE DEBA CAMBIAR PONERLES LA MEDIANA O SI AVERIGUO COMO CON REGRESION CON EL ARTICULO QUE ME MANDASTE.
 
 
 #### Ahora si la validacion de la base Perfil Sociodemografico
