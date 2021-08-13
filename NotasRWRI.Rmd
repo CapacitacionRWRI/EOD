@@ -1464,6 +1464,8 @@ knitr::kables(list(knitr::kable(HogarProporcionesNAs, caption = 'Hogar'), knitr:
 
 ```
 
+SOLO ME FALTA AQUI YA PONER EL ANALISIS DE LAS PROPORCIONES DE LOS NA Y CON LOS QUE SE DEBA CAMBIAR PONERLES LA MEDIANA O SI AVERIGUO COMO CON REGRESION.
+
 
 #### Ahora si la validacion de la base Perfil Sociodemografico
 
